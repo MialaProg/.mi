@@ -19,11 +19,11 @@
             "type": "image/png"
         }
     ],
-    "start_url": "https://miala.000webhostapp.com/index.php?utm_source=web_app_manifest",
+    "start_url": "https://miala.000webhostapp.com/",
+    "scope": "https://miala.000webhostapp.com/",
     "theme_color": "#F07818",
     "background_color": "#70D0B8",
     "lang": "fr-fr",
-    "scope": "https://miala.000webhostapp.com/",
     "display": "minimal-ui",
     "screenshots": [
         {
