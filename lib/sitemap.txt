@@ -1,2 +1,2 @@
-https://miala.000webhostapp.com/index.php?from=sitemap
+https://miala.000webhostapp.com/index.php?utm_source=sitemap
 https://mialaprog.github.io/.mi/

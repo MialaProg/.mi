@@ -1,0 +1,42 @@
+{
+    "name": "Miala",
+    "short_name": ".Mi",
+    "description": "Tous vos services Miala dans une seule application !",
+    "icons": [
+        {
+            "src": "https://mialaprog.github.io/.mi/lib/icon/logo V5.3 1000x1000.png",
+            "sizes": "1000x1000",
+            "type": "image/png"
+        },
+        {
+            "src": "https://mialaprog.github.io/.mi/lib/icon/logo V5.3 512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "https://mialaprog.github.io/.mi/lib/icon/logo V5.3 192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "https://miala.000webhostapp.com/index.php?utm_source=web_app_manifest",
+    "theme_color": "#F07818",
+    "background_color": "#70D0B8",
+    "lang": "fr-fr",
+    "scope": "https://miala.000webhostapp.com/",
+    "display": "minimal-ui",
+    "screenshots": [
+        {
+            "src": "https://mialaprog.github.io/.mi/lib/icon/logo V5.3 1000x1000.png",
+            "type": "image/png",
+            "sizes": "1000x1000",
+            "form_factor": "wide"
+        },
+        {
+            "src": "https://mialaprog.github.io/.mi/lib/icon/logo V5.3 1000x1000.png",
+            "type": "image/png",
+            "sizes": "1000x1000",
+            "form_factor": "narrow"
+        }
+    ]
+}
