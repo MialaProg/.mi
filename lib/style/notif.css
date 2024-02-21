@@ -1,0 +1,21 @@
+
+.notif_bd {
+    position: fixed !important;
+    margin-right: 2.5%;
+    margin-bottom: 2.5% !important;
+    max-width: 25rem;
+    width: 95vw;
+    bottom: 0;
+    right: 0;
+}
+
+.notif_bd.button * {
+    /* width: calc(100% - 40px); */
+    width: 100% !important;
+    font-size: clamp(5px, 18px, 3.8vw);
+    right: 0;
+}
+
+.notification {
+    z-index: 10;
+}
