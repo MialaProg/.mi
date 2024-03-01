@@ -10,6 +10,8 @@ $(document).ready(function () {
     $("#MiC-form").submit(function (event) {
         event.preventDefault(); // Empêche la soumission normale du formulaire
 
+        let form_data = $('#MiC-form').serialize() + "&secu";
+
         let mdp_len = $("#MiC-inp-mdp").val().length;
         if (mdp_len != 0 && mdp_len < 3){
             MiC_showMsg("Le mot de passe doit faire au moins 3 caractères.");
@@ -19,9 +21,6 @@ $(document).ready(function () {
         all_inputs = $("[id^='MiC-inp-']");
         all_inputs.prop('disabled', true);
         // all_inputs.addClass("is-loading");
-
-        let form_data = $('#MiC-form').serialize() + "&secu";
-        console.log(form_data);
 
         MiC_showMsg("Demande de connexion en cours...");
 
