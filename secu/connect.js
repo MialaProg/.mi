@@ -21,6 +21,7 @@ $(document).ready(function () {
         // all_inputs.addClass("is-loading");
 
         let form_data = $('#MiC-form').serialize() + "&secu";
+        console.log(form_data);
 
         MiC_showMsg("Demande de connexion en cours...");
 
@@ -50,7 +51,7 @@ $(document).ready(function () {
                 // Vérifier le statut de la requête (jqXHR.status)
                 // jqXHR.status === 404 : Page introuvable
                 // jqXHR.status === 500 : Erreur interne du serveur
-                MiC_showMsg('Erreur ' + textStatus + 'n°' + jqXHR.status + ' lors de la connexion au serveur.');
+                MiC_showMsg('Erreur {' + textStatus + '} n°' + jqXHR.status + ' lors de la connexion au serveur.');
                 console.log(errorThrown);
 
                 all_inputs.prop('disabled', false);
