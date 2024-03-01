@@ -10,6 +10,12 @@ $(document).ready(function () {
     $("#MiC-form").submit(function (event) {
         event.preventDefault(); // Empêche la soumission normale du formulaire
 
+        let mdp_len = $("#MiC-inp-mdp").val().length;
+        if (mdp_len != 0 && mdp_len < 3){
+            MiC_showMsg("Le mot de passe doit faire au moins 3 caractères.");
+            return false;
+        }
+
         all_inputs = $("[id^='MiC-inp-']");
         all_inputs.prop('disabled', true);
         // all_inputs.addClass("is-loading");
@@ -32,7 +38,7 @@ $(document).ready(function () {
                     if (result == 'Incorrect') {
                         MiC_showMsg("Nom d'utilisateur ou mot de passe incorrect.");
                     } else {
-                        MiC_showMsg('Oops ! Il y a eu une erreur: ' + result);
+                        MiC_showMsg('Erreur: ' + result);
                     }
 
                     // all_inputs.removeClass("is-loading");
