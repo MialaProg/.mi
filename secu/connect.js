@@ -3,6 +3,20 @@ function MiC_showMsg(txt) {
     MiC_msg_elm.html(txt);
 }
 
+function MiC_reload() {
+    var currentUrl = window.location.href;
+    var url = new URL(currentUrl);
+    var params = new URLSearchParams(url.search);
+
+    if (params.has("mdp-edit")) {
+        // url.searchParams.delete("mdp-edit");
+        // window.location.href = url.toString();
+        window.location.href = "./";
+    } else {
+        location.reload(true);
+    }
+}
+
 var all_inputs = $("[id^='MiC-inp-']");
 
 $(document).ready(function () {
@@ -33,12 +47,12 @@ $(document).ready(function () {
 
                 if (result == 'ConectOK') {
                     MiC_showMsg("Connexion acceptée. Actualisation...");
-                    location.reload(true);
+                    MiC_reload();
                 } else if (result == 'Incorrect') {
                     MiC_showMsg("Nom d'utilisateur ou mot de passe incorrect.");
                 } else if (result == 'TimeOut') {
                     MiC_showMsg('Delai expiré... Actualisation...');
-                    location.reload(true);
+                    MiC_reload();
                 } else {
                     MiC_showMsg('Erreur: ' + result);
                 }
