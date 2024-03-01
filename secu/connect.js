@@ -13,7 +13,7 @@ $(document).ready(function () {
         let form_data = $('#MiC-form').serialize() + "&secu";
 
         let mdp_len = $("#MiC-inp-mdp").val().length;
-        if (mdp_len != 0 && mdp_len < 3){
+        if (mdp_len != 0 && mdp_len < 3) {
             MiC_showMsg("Le mot de passe doit faire au moins 3 caractères.");
             return false;
         }
@@ -34,16 +34,18 @@ $(document).ready(function () {
                 if (result == 'ConectOK') {
                     MiC_showMsg("Connexion acceptée. Actualisation...");
                     location.reload(true);
+                } else if (result == 'Incorrect') {
+                    MiC_showMsg("Nom d'utilisateur ou mot de passe incorrect.");
+                } else if (result == 'TimeOut') {
+                    MiC_showMsg('Delai expiré... Actualisation...');
+                    location.reload(true);
                 } else {
-                    if (result == 'Incorrect') {
-                        MiC_showMsg("Nom d'utilisateur ou mot de passe incorrect.");
-                    } else {
-                        MiC_showMsg('Erreur: ' + result);
-                    }
-
-                    // all_inputs.removeClass("is-loading");
-                    all_inputs.prop('disabled', false);
+                    MiC_showMsg('Erreur: ' + result);
                 }
+
+                // all_inputs.removeClass("is-loading");
+                all_inputs.prop('disabled', false);
+
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 // La requête a échoué
