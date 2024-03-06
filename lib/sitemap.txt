@@ -1,5 +1,8 @@
 https://mi.42web.io/
 https://mi.42web.io/index.php?utm_source=sitemap
 https://mi.42web.io/secu
+https://mi.42web.io/wazo
+https://wazo.42web.io/
+https://wazo.mi.42web.io/
 https://mialaprog.github.io/.mi/
 https://miala.000webhostapp.com/index.php?utm_source=sitemap
