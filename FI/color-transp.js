@@ -1,6 +1,4 @@
-var img = document.createElement('input');
-img.type = 'file';
-img.accept = 'image/*';
+var img = document.getElementById('img');
 img.onchange = e => {
     var reader = new FileReader();
     reader.onload = readerEvent => {
