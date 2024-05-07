@@ -19,6 +19,12 @@ function MiC_reload() {
 
 var all_inputs = $("[id^='MiC-inp-']");
 
+document.getElementById('#MiC-form').submit(function (event) {
+    if (!window.jQuery){
+        event.preventDefault();
+    }
+})
+
 $(document).ready(function () {
     var home_path = $("#home_path").text();
     $("#MiC-form").submit(function (event) {

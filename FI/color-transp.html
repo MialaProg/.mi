@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Grayscaling and inverting color | Canvas pixel manipulation</title>
+  </head>
+  <body style="background-color: green;">
+    <canvas id="canvas" width="5000" height="5000"></canvas>
+    <form>
+			<input type="radio" id="original" name="color" value="original" checked>
+  		<label for="original">Original</label>
+
+			<input type="radio" id="transparent" name="color" value="transparent">
+  		<label for="transparent">Transparent</label>
+
+
+			<input type="number" id="nb" name="color" value="100" placeholder="Moy max" min="0" max="255">
+    </form>
+		<script src="color-transp.js"></script>
+  </body>
+</html>
