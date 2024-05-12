@@ -1,4 +1,90 @@
 <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traitement d'image</title>
+</head>
+<body style="background-color:green">
+    <h1>Traitement d'image</h1>
+
+    <input type="file" id="image" accept="image/*">
+    <div>
+        <input type="number" id="x" value="100" max="255" min="0">
+        <button id="traiter">Traiter</button>
+        <button id="imageOrigine">Image d'origine</button>
+    </div>
+    <canvas id="canvas"></canvas><br>
+    <button id="telecharger">Télécharger</button>
+
+    <script>
+        const imageInput = document.getElementById('image');
+        const canvas = document.getElementById('canvas');
+        const xInput = document.getElementById('x');
+        const traiterButton = document.getElementById('traiter');
+        const imageOrigineButton = document.getElementById('imageOrigine');
+        const telechargerButton = document.getElementById('telecharger');
+
+        let imageOriginale;
+
+        imageInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageOriginale = new Image();
+                    imageOriginale.onload = function() {
+                        canvas.width = imageOriginale.width;
+                        canvas.height = imageOriginale.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(imageOriginale, 0, 0);
+                    };
+                    imageOriginale.src = e.target.result;
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        traiterButton.addEventListener('click', function() {
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            const seuil = parseInt(xInput.value);
+
+            for (let i = 0; i < data.length; i += 4) {
+                const moyenne = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                if (moyenne > seuil) {
+                    data[i] = 0;
+                    data[i + 1] = 0;
+                    data[i + 2] = 0;
+                    data[i + 3] = 0;
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        });
+
+        imageOrigineButton.addEventListener('click', function() {
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(imageOriginale, 0, 0);
+        });
+
+        telechargerButton.addEventListener('click', function() {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream");
+            link.download = 'image.png';
+            
+            if (document.createEvent) {
+                const event = document.createEvent('MouseEvents');
+                event.initEvent('click', true, true);
+                link.dispatchEvent(event);
+            } else {
+                window.open(link.href, '_blank');
+                window.focus();
+            }
+        });
+    </script>
+</body>
+</html><!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -6,6 +92,7 @@
   </head>
   <body style="background-color: green;">
     <canvas id="canvas" width="100" height="100"></canvas>
+    <p>Select an image...</p>
     <form>
 <input type="file" id="img" name="img" accept="image/*">
 			<input type="radio" id="original" name="color" value="original" checked>
@@ -19,4 +106,4 @@
     </form>
 		<script src="color-transp.js"></script>
   </body>
-</html>
+</html> -->
