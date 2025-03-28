@@ -32,10 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function code() {
-    
+    createTable(dico);
 }
 
-function createTable(list, cols){
+function createTable(list){
     var table = document.createElement('table');
     table.classList.add('table');
     // var thead = document.createElement('thead');
