@@ -9,7 +9,8 @@ async function fetchCSV() {
         }
         const text = await response.text();
         // console.log("CSV content:", text);
-        dico = text.split('\n').map(line => line.split(';'));
+        dico = text.split('\n').sort((a, b) => a.localeCompare(b));
+        dico = dico.map(line => line.split(';'));
     } catch (error) {
         console.error("Error fetching the CSV file:", error);
     }
