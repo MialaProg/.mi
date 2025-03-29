@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sort File Content</title>
+</head>
+
+<body>
+    <h1>Sorted Content</h1>
+    <!-- This <pre> element will display the sorted content or any error messages -->
+    <pre id="output">Loading...</pre>
+
+    <script>
+        // Asynchronous function to fetch and sort the content of the file
+        async function fetchAndSortFile() {
+            try {
+                // Fetch the file 'dico.fimi' from the same directory
+                const response = await fetch('./dico.fimi');
+
+                // Check if the fetch request was successful
+                if (!response.ok) {
+                    // Display an error message if the file could not be fetched
+                    document.getElementById('output').textContent = 'Failed to fetch the file.';
+                    return;
+                }
+
+                // Read the file content as text
+                const text = await response.text();
+
+                // Split the content into lines and filter out empty lines
+                const lines = text.split('\n').filter(line => line.trim() !== '');
+
+                // Sort the lines alphabetically
+                const sortedLines = lines.sort((a, b) => a.localeCompare(b));
+
+                // Display the sorted lines in the <pre> element
+                document.getElementById('output').textContent = sortedLines.join('\n');
+            } catch (error) {
+                // Display an error message if an exception occurs
+                document.getElementById('output').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        // Call the function to fetch and sort the file content when the page loads
+        fetchAndSortFile();
+    </script>
+</body>
+
+</html>

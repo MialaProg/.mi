@@ -3,7 +3,7 @@ var indexJS = false;
 
 async function fetchCSV() {
     try {
-        const response = await fetch('./dico.fimi');
+        const response = await fetch('./dico.fimi?randomId=' + Math.random());
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
