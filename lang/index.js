@@ -67,7 +67,9 @@ function createTable(list){
         tbody.appendChild(tr);
     });
     table.appendChild(tbody);
-    return table;
+    
+    document.getElementById('pageContent').appendChild(table);
+    document.getElementById('deleteMe').remove();
 }
 
 
