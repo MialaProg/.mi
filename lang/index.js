@@ -36,10 +36,11 @@ function code() {
 }
 
 function createTable(list){
-    var table = document.createElement('table');
-    table.classList.add('table');
+    
+    const table = document.createElement('table');
+    table.classList.add('table', 'is-bordered', 'is-striped', 'is-hoverable');
     // var thead = document.createElement('thead');
-    var tbody = document.createElement('tbody');
+    const tbody = document.createElement('tbody');
     // var tr = document.createElement('tr');
     // var th = document.createElement('th');
     // th.textContent = 'Code';
@@ -68,7 +69,7 @@ function createTable(list){
     });
     table.appendChild(tbody);
     
-    document.getElementById('pageContent').appendChild(table);
+    document.getElementById('table').appendChild(table);
     document.getElementById('deleteMe').remove();
 }
 
