@@ -1,3 +1,6 @@
+// For DB:
+// FR;MI;racine;exemple
+
 var dico = false;
 var indexJS = false;
 
@@ -41,10 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function code() {
     createTable(dico);
+    init_search();
 }
 
-function createTable(list){
-    
+function createTable(list) {
+
     const table = document.createElement('table');
     table.classList.add('table', 'is-bordered', 'is-striped', 'is-hoverable');
     // var thead = document.createElement('thead');
@@ -76,7 +80,8 @@ function createTable(list){
         tbody.appendChild(tr);
     });
     table.appendChild(tbody);
-    
+
+    document.getElementById('table').innerHTML = ''; // Clear the existing table
     document.getElementById('table').appendChild(table);
     document.getElementById('deleteMe').remove();
 }
@@ -94,6 +99,23 @@ function changeTheme() {
     }
     localStorage.setItem('theme', html.classList.contains('theme-dark') ? 'dark' : 'light');
 }
+
+function init_search() {
+    // Detect when the search bar is completed and filter the dico variable
+    document.getElementById('searchBar').addEventListener('input', (event) => {
+        const searchTerm = event.target.value.toLowerCase();
+        if (searchTerm.length > 0) {
+            const filteredDico = dico.filter(item =>
+                item.some(field => field.toLowerCase().includes(searchTerm))
+            );
+            createTable(filteredDico); // Recreate the table with filtered data
+        } else {
+            createTable(dico); // Recreate the table with the original data
+        }
+    });
+}
+
+
 
 
 
