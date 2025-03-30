@@ -17,7 +17,7 @@ attraction;atraqsT
 aujourd'hui;ojo
 avoir;ar
 beaucoup/nombreux;mUi
-carottes;miamidi
+carotte;miamidi
 cours;qlas
 demain;aprojo
 dieu;diwi
@@ -25,6 +25,7 @@ devoir (verbe);dévèr
 être;ér
 faire;fér
 fils;fili
+fille;fili
 fermer;qlozèr
 gateau;gato
 ici;isi
@@ -38,6 +39,8 @@ parler;Hablèr
 partage;patag
 penser;pAsèr
 père;piri
+mère;piri
+parent;piri
 poser;pozèr
 pouvoir (verbe);podèr
 protéger;protégèr
@@ -46,7 +49,7 @@ sujet;sujé
 terreur;térOr
 transparent;travèrsé
 fenêtre;qlOrtav
-volets;qlOrtég
+volet;qlOrtég
 test/control/examen;éxam
 voir;véèr
 je;yo
