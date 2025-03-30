@@ -1,4 +1,4 @@
-0;0 (nO)
+0;0 (nO);num
 1;1 (wo)
 2;2 (do)
 3;3 (ro)
@@ -11,9 +11,9 @@
 9;9 (qos)
 98;98 (qosoros)
 98000;98000 (qosorosononono)
-aller;vèr
+aller;vèr;vb
 après;apro
-attraction;atraqs•
+attraction;atraqs•;nom
 aujourd'hui;ojo
 avoir;ar
 beaucoup/nombreux;mUi
