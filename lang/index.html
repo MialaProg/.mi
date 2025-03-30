@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr-miala">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,18 +23,18 @@
 </head>
 
 <body>
-	<div class="block">
-		<div id="breadcrumb_container"></div>
-		<div class="content" id="pageContent" style="
+    <div class="block">
+        <div id="breadcrumb_container"></div>
+        <div class="content" id="pageContent" style="
     margin-bottom: 2em;">
-			<div id="deleteMe">
-				<h1>Chargement en cours... | Mialien</h1>
-				<br><progress class="progress global is-small is-primary" max="100">25%</progress>
-			</div>
-            <div class="field" style="margin-bottom: 3vw;
+            <div id="deleteMe">
+                <h1>Chargement en cours... | Mialien</h1>
+                <br><progress class="progress global is-small is-primary" max="100">25%</progress>
+            </div>
+            <div class="field" style="/*margin-bottom: 3vw;*/
             position: fixed;
             width: 94vw;
-            z-index: 9;"></div>
+            z-index: 9;">
                 <p class="control"><!--has-icons-left-->
                     <input class="input" type="text" placeholder="Rechercher..." id="searchBar">
                     <span class="icon is-small is-left">
@@ -43,15 +44,16 @@
             </div>
             <div class="table-container" id="dicoTable"></div>
             <div id="inCtxt" class="is-hidden">
-            <h2>Exemples:</h2>
-            <table class="table-container" id="ctxtTable"></table>
-		</div></div>
-		<div class="content" id="changelog"></div>
-	</div>
+                <h2>Exemples:</h2>
+                <table class="table-container" id="ctxtTable"></table>
+            </div>
+        </div>
+        <div class="content" id="changelog"></div>
+    </div>
 
-	<div class="buttons bottom">
-		<button onclick="changeTheme()" class="button">Changer le thème</button>
-	</div>
+    <div class="buttons bottom">
+        <button onclick="changeTheme()" class="button">Changer le thème</button>
+    </div>
 
 </body>
 
