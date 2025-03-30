@@ -6,15 +6,15 @@ var [dico,
     indexJS
 ] = Array(3).fill(false);
 
-async function fetchFiMi(path, list) {
+async function fetchFiMi(path) {
     try {
         const response = await fetch(path + '?randomId=' + Math.random());
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const text = await response.text();
-        let tempDico = text.split('\n').sort((a, b) => a.localeCompare(b));
-        return tempDico.map(line => line.split(';'));
+        let list = text.split('\n').sort((a, b) => a.localeCompare(b));
+        return list.map(line => line.split(';'));
     } catch (error) {
         console.error("Error fetching the FiMi file:", error);
     }
