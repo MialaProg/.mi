@@ -20,11 +20,16 @@ async function fetchFiMi(path) {
     }
 }
 
-dico = fetchFiMi('./dico.fimi');
+async function initDBs(){
+    dico = await fetchFiMi('./dico.fimi');
+    ctxt = await fetchFiMi('./ctxt.fimi');
+}
+
 
 
 // Wait until all content is loaded
 document.addEventListener("DOMContentLoaded", () => {
+        
     const waitForConvertMiFont = () => {
         if (dico && typeof convertMiFont === "function" && indexJS) {
             code();
@@ -46,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
 function code() {
     createTable(dico);
     init_search();
-    ctxt = fetchFiMi('./ctxt.fimi');
 }
 
 function createTable(list, id = "dicoTable") {
