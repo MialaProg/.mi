@@ -14,13 +14,13 @@ async function fetchFiMi(path, list) {
         }
         const text = await response.text();
         let tempDico = text.split('\n').sort((a, b) => a.localeCompare(b));
-        list = tempDico.map(line => line.split(';'));
+        return tempDico.map(line => line.split(';'));
     } catch (error) {
         console.error("Error fetching the FiMi file:", error);
     }
 }
 
-fetchFiMi('./dico.fimi', dico);
+dico = fetchFiMi('./dico.fimi');
 
 
 // Wait until all content is loaded
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function code() {
     createTable(dico);
     init_search();
-    fetchFiMi('./ctxt.fimi', ctxt);
+    ctxt = fetchFiMi('./ctxt.fimi');
 }
 
 function createTable(list, id = "dicoTable") {
