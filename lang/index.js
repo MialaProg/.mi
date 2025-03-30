@@ -27,6 +27,16 @@ async function initDBs(){
 
 initDBs();
 
+// Update padding for content below the search bar
+function updatePadding(){
+    const search = document.getElementById('searchBar');
+    const firstItem = document.querySelector('#dicoTable');
+    firstItem.style.paddingTop = search.offsetHeight + 'px';
+}
+
+// Update padding on window resize and load events
+window.addEventListener('resize', updatePadding);
+window.addEventListener('load', updatePadding);
 
 // Wait until all content is loaded
 document.addEventListener("DOMContentLoaded", () => {
