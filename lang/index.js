@@ -1,25 +1,26 @@
 // For DB:
 // FR;MI;racine;exemple
 
-var dico = false;
-var indexJS = false;
+var [dico,
+    ctxt,
+    indexJS
+] = Array(3).fill(false);
 
-async function fetchCSV() {
+async function fetchFiMi(path, dicoRef) {
     try {
-        const response = await fetch('./dico.fimi?randomId=' + Math.random());
+        const response = await fetch(path+'?randomId=' + Math.random());
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const text = await response.text();
-        // console.log("CSV content:", text);
-        dico = text.split('\n').sort((a, b) => a.localeCompare(b));
-        dico = dico.map(line => line.split(';'));
+        let tempDico = text.split('\n').sort((a, b) => a.localeCompare(b));
+        dicoRef.value = tempDico.map(line => line.split(';'));
     } catch (error) {
-        console.error("Error fetching the CSV file:", error);
+        console.error("Error fetching the FiMi file:", error);
     }
 }
 
-fetchCSV();
+fetchFiMi('./dico.fimi', dico);
 
 
 // Wait until all content is loaded
@@ -45,9 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
 function code() {
     createTable(dico);
     init_search();
+    fetchFiMi('./ctxt.fimi', ctxt);
 }
 
-function createTable(list) {
+function createTable(list, id="dicoTable") {
 
     const table = document.createElement('table');
     table.classList.add('table', 'is-bordered', 'is-striped', 'is-hoverable');
@@ -81,9 +83,11 @@ function createTable(list) {
     });
     table.appendChild(tbody);
 
-    document.getElementById('table').innerHTML = ''; // Clear the existing table
-    document.getElementById('table').appendChild(table);
+    document.getElementById(id).innerHTML = ''; // Clear the existing table
+    document.getElementById(id).appendChild(table);
+    try{
     document.getElementById('deleteMe').remove();
+    }catch(e){}
 }
 
 
@@ -109,6 +113,13 @@ function init_search() {
                 item.some(field => field.toLowerCase().includes(searchTerm))
             );
             createTable(filteredDico); // Recreate the table with filtered data
+            if (ctxt){
+                const filteredCtxt = ctxt.filter(item =>
+                    item.some(field => field.toLowerCase().includes(searchTerm))
+                );
+                createTable(filteredCtxt, "ctxtTable");
+            }
+        
         } else {
             createTable(dico); // Recreate the table with the original data
         }
