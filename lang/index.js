@@ -8,7 +8,7 @@ var [dico,
 
 async function fetchFiMi(path, list) {
     try {
-        const response = await fetch(path+'?randomId=' + Math.random());
+        const response = await fetch(path + '?randomId=' + Math.random());
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -49,7 +49,7 @@ function code() {
     fetchFiMi('./ctxt.fimi', ctxt);
 }
 
-function createTable(list, id="dicoTable") {
+function createTable(list, id = "dicoTable") {
 
     const table = document.createElement('table');
     table.classList.add('table', 'is-bordered', 'is-striped', 'is-hoverable');
@@ -85,9 +85,9 @@ function createTable(list, id="dicoTable") {
 
     document.getElementById(id).innerHTML = ''; // Clear the existing table
     document.getElementById(id).appendChild(table);
-    try{
-    document.getElementById('deleteMe').remove();
-    }catch(e){}
+    try {
+        document.getElementById('deleteMe').remove();
+    } catch (e) { }
 }
 
 
@@ -107,19 +107,25 @@ function changeTheme() {
 function init_search() {
     // Detect when the search bar is completed and filter the dico variable
     document.getElementById('searchBar').addEventListener('input', (event) => {
+        const inCtxt = document.getElementById('inCtxt');
+        inCtxt.classList.add('is-hidden');
+
         const searchTerm = event.target.value.toLowerCase();
         if (searchTerm.length > 0) {
             const filteredDico = dico.filter(item =>
                 item.some(field => field.toLowerCase().includes(searchTerm))
             );
             createTable(filteredDico); // Recreate the table with filtered data
-            if (ctxt){
+            if (ctxt) {
                 const filteredCtxt = ctxt.filter(item =>
                     item.some(field => field.toLowerCase().includes(searchTerm))
                 );
-                createTable(filteredCtxt, "ctxtTable");
+                if (filteredCtxt.length > 0) {
+                    createTable(filteredCtxt, "ctxtTable");
+                    inCtxt.classList.remove('is-hidden');
+                }
             }
-        
+
         } else {
             createTable(dico); // Recreate the table with the original data
         }
