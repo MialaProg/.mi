@@ -6,7 +6,7 @@ var [dico,
     indexJS
 ] = Array(3).fill(false);
 
-async function fetchFiMi(path, dicoRef) {
+async function fetchFiMi(path, list) {
     try {
         const response = await fetch(path+'?randomId=' + Math.random());
         if (!response.ok) {
@@ -14,7 +14,7 @@ async function fetchFiMi(path, dicoRef) {
         }
         const text = await response.text();
         let tempDico = text.split('\n').sort((a, b) => a.localeCompare(b));
-        dicoRef.value = tempDico.map(line => line.split(';'));
+        list = tempDico.map(line => line.split(';'));
     } catch (error) {
         console.error("Error fetching the FiMi file:", error);
     }
