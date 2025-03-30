@@ -25,6 +25,7 @@ async function initDBs(){
     ctxt = await fetchFiMi('./ctxt.fimi');
 }
 
+initDBs();
 
 
 // Wait until all content is loaded

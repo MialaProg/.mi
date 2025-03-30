@@ -30,17 +30,21 @@
 				<h1>Chargement en cours... | Mialien</h1>
 				<br><progress class="progress global is-small is-primary" max="100">25%</progress>
 			</div>
-            <div class="field" style="position: sticky; top: 0; z-index: 10; padding: 1em;"></div>
-                <p class="control has-icons-left">
+            <div class="field" style="margin-bottom: 3vw;
+            position: fixed;
+            width: 94vw;
+            z-index: 9;"></div>
+                <p class="control"><!--has-icons-left-->
                     <input class="input" type="text" placeholder="Rechercher..." id="searchBar">
                     <span class="icon is-small is-left">
                         <i class="fas fa-search"></i>
                     </span>
                 </p>
             </div>
+            <span style="display: block; height: 3em;"></span>
             <div class="table-container" id="dicoTable"></div>
             <div id="inCtxt" class="is-hidden">
-            <h2>In context:</h2>
+            <h2>Exemples:</h2>
             <table class="table-container" id="ctxtTable"></table>
 		</div></div>
 		<div class="content" id="changelog"></div>
