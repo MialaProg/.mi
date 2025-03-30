@@ -1,4 +1,4 @@
-0;0 (nO)
+0;0 (nO);num
 1;1 (wo)
 2;2 (do)
 3;3 (ro)
@@ -11,19 +11,22 @@
 9;9 (qos)
 98;98 (qosoros)
 98000;98000 (qosorosononono)
-aller;vèr
+aller;vèr;vb
 après;apro
-attraction;atraqsT
+attraction;atraqs•;nom
 aujourd'hui;ojo
 avoir;ar
 beaucoup/nombreux;mUi
-carottes;miamidi
+carotte;miamidi
 cours;qlas
 demain;aprojo
 dieu;diwi
+devoir (verbe);dévèr
 être;ér
 faire;fér
 fils;fili
+fille;fili
+fermer;qlozèr
 gateau;gato
 ici;isi
 inverse;invirsi
@@ -36,10 +39,17 @@ parler;Hablèr
 partage;patag
 penser;pAsèr
 père;piri
+mère;piri
+parent;piri
 poser;pozèr
 pouvoir (verbe);podèr
+protéger;protégèr
+porte (qui se ferme);qlOrt
 sujet;sujé
 terreur;térOr
+transparent;travèrsé
+fenêtre;qlOrtav
+volet;qlOrtég
 test/control/examen;éxam
 voir;véèr
 je;yo
