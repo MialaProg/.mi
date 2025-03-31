@@ -1,0 +1,7 @@
+{
+    "name":"Apprendre le Mialien",
+    "short_name":"MiEdu - Mi",
+    "description":"Apprendre le Mialien via MiEdu",
+    "start_url":"https://mialaprog.github.io/.mi/lang/",
+    "display":"standalone"
+}

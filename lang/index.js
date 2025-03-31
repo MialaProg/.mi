@@ -8,7 +8,7 @@ var [dico,
 
 async function fetchFiMi(path) {
     try {
-        const response = await fetch(path + '?randomId=' + Math.random());
+        const response = await fetch(path); // + '?randomId=' + Math.random() // Offline remove
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -20,7 +20,7 @@ async function fetchFiMi(path) {
     }
 }
 
-async function initDBs(){
+async function initDBs() {
     dico = await fetchFiMi('./dico.fimi');
     ctxt = await fetchFiMi('./ctxt.fimi');
 }
@@ -28,10 +28,10 @@ async function initDBs(){
 initDBs();
 
 // Update padding for content below the search bar
-function updatePadding(){
+function updatePadding() {
     const search = document.getElementById('searchBar');
     const firstItem = document.querySelector('#dicoTable');
-    firstItem.style.paddingTop = search.offsetHeight + 'px';
+    firstItem.style.paddingTop = search.offsetHeight + 3 + 'px';
 }
 
 // Update padding on window resize and load events
@@ -40,7 +40,7 @@ window.addEventListener('load', updatePadding);
 
 // Wait until all content is loaded
 document.addEventListener("DOMContentLoaded", () => {
-        
+
     const waitForConvertMiFont = () => {
         if (dico && typeof convertMiFont === "function" && indexJS) {
             code();
@@ -147,7 +147,49 @@ function init_search() {
     });
 }
 
-
+// Gestion de l'utilisation hors connexion
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => {
+                console.log('Service worker registered.', reg);
+            })
+            .catch(err => {
+                console.error('Service worker registration failed:', err);
+            });
+    });
+}
+const CACHE_NAME = 'cache-v1';
+const ASSETS = [
+    './index.html',
+    './index.js',
+    './dico.fimi',
+    './ctxt.fimi',
+    '../lib/fonts/miala-bitmap-font.css',
+    '../lib/style/divers.css',
+    '../lib/style/checkbox.css',
+    '../lib/style/buttons.css',
+    '../lib/fonts/mifont.js',
+    'https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css'
+];
+// Précacher les ressources
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => {
+                console.log('Opened cache');
+                return cache.addAll(ASSETS);
+            })
+    );
+}
+);
+// Intercepter les requêtes réseau
+self.addEventListener('fetch', event => {
+    event.respondWith(
+        fetch(event.request)
+            .catch(() => caches.match(event.request))
+    );
+});
 
 
 
