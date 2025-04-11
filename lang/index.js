@@ -248,7 +248,7 @@ function generateTrainingExercises() {
 
             const options = dico
                 .sort(() => 0.5 - Math.random())
-                .slice(0, Math.max(5, dico.length)) // Ensure at least 5 options
+                .slice(0, Math.floor(Math.random() * 5) + 3) // Ensure between 3 and 7 options
                 .map(item => item[1]);
             if (!options.includes(correctAnswer)) {
                 options[Math.floor(Math.random() * options.length)] = correctAnswer;
@@ -258,7 +258,7 @@ function generateTrainingExercises() {
             options.forEach(option => {
                 const button = document.createElement('button');
                 button.textContent = option;
-                button.classList.add('button', 'is-primary', 'is-light');
+                button.classList.add('button');
                 button.addEventListener('click', () => {
                     if (option === correctAnswer) {
                         alert('Correct!');
@@ -291,7 +291,7 @@ function generateTrainingExercises() {
             const wordButtons = shuffledWords.map(word => {
                 const button = document.createElement('button');
                 button.textContent = word;
-                button.classList.add('button', 'is-info', 'is-light');
+                button.classList.add('button');
                 return button;
             });
 
