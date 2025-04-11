@@ -175,7 +175,7 @@ function changeTheme() {
 // Function to switch the alphabet
 function changeAbc() {
     AbcMi = !AbcMi;
-    localStorage.setItem('abc', stringify(AbcMi));
+    localStorage.setItem('abc', JSON.stringify(AbcMi));
 }
 
 function init_search() {
