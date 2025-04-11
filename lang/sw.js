@@ -5,11 +5,13 @@ const ASSETS = [
     './index.js',
     './dico.fimi',
     './ctxt.fimi',
+    './rcc.fimi',
     '../lib/fonts/miala-bitmap-font.css',
     '../lib/style/divers.css',
     '../lib/style/checkbox.css',
     '../lib/style/buttons.css',
     '../lib/fonts/mifont.js',
+    '../lib/script/modal.js',
     'https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css',
     './sw.js'
 ];

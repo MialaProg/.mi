@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../lib/style/checkbox.css">
     <link rel="stylesheet" href="../lib/style/buttons.css">
     <script src="../lib/fonts/mifont.js"></script>
+    <script src="../lib/script/modal.js"></script>
     <script src="./index.js"></script>
     <style>
         .loading-container {
@@ -54,6 +55,14 @@
     <div class="buttons bottom">
         <button onclick="changeTheme()" class="button">Changer le thème</button>
         <button onclick="changeAbc()" class="button">Changer d'alphabet</button>
+    </div>
+
+    <div class="modal" id="trainingModal">
+        <div class="modal-background"></div>
+        <div class="modal-content" id="trainingContent">
+            
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
     </div>
 
 </body>
