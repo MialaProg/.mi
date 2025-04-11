@@ -3,10 +3,12 @@
 
 var [dico,
     ctxt,
-    indexJS
-] = Array(3).fill(false);
+    indexJS,
+    rcc,
+    fra_eng
+] = Array(5).fill(false);
 
-async function fetchFiMi(path) {
+async function fetchFiMi(path, sep=';') {
     try {
         const response = await fetch(path); // + '?randomId=' + Math.random() // Offline remove
         if (!response.ok) {
@@ -14,7 +16,7 @@ async function fetchFiMi(path) {
         }
         const text = await response.text();
         let list = text.split('\n').sort((a, b) => a.localeCompare(b));
-        return list.map(line => line.split(';'));
+        return list.map(line => line.split(sep));
     } catch (error) {
         console.error("Error fetching the FiMi file:", error);
     }
@@ -23,9 +25,38 @@ async function fetchFiMi(path) {
 async function initDBs() {
     dico = await fetchFiMi('./dico.fimi');
     ctxt = await fetchFiMi('./ctxt.fimi');
+    rcc = await fetchFiMi('./rcc.fimi', ':');
+    fra_eng = await fetchFiMi('../ext/fra--eng.fimi', ':');
 }
 
 initDBs();
+
+// Remplace les racourcis claviers par la prononciation
+function miToAudio(w){
+    if (!rcc){
+        return '*'+w;
+    }
+
+    /*
+        for (let [from, to] of rcc) {
+        w = w.split(from).join(to);
+    }
+    return w;
+    */
+
+    return rcc.reduce((acc, [from, to]) => acc.replaceAll(from, to), w);
+}
+
+function frToEn(w){
+    if (!fra_eng){
+        return '(FR: '+w+')';
+    }
+    let trad = fra_eng.find(([fr]) => fr === w);
+    if (!trad){
+        return '(FR: '+w+')';
+    }
+    return w;
+}
 
 // Update padding for content below the search bar
 function updatePadding() {
@@ -92,6 +123,10 @@ function createTable(list, id = "dicoTable") {
         abbr.textContent = item[1];
         td.appendChild(abbr);
         convertMiFont(td);
+        tr.appendChild(td);
+        // English
+        td = document.createElement('td');
+        td.textContent = frToEn(item[0]);
         tr.appendChild(td);
 
         tbody.appendChild(tr);
