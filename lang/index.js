@@ -9,7 +9,7 @@ var [dico,
     AbcMi
 ] = Array(5).fill(false);
 
-async function fetchFiMi(path, sep=';') {
+async function fetchFiMi(path, sep = ';') {
     try {
         const response = await fetch(path); // + '?randomId=' + Math.random() // Offline remove
         if (!response.ok) {
@@ -33,9 +33,9 @@ async function initDBs() {
 initDBs();
 
 // Remplace les racourcis claviers par la prononciation
-function miToAudio(w){
-    if (!rcc){
-        return '*'+w;
+function miToAudio(w) {
+    if (!rcc) {
+        return '*' + w;
     }
 
     /*
@@ -48,12 +48,12 @@ function miToAudio(w){
     return rcc.reduce((acc, [from, to]) => acc.replaceAll(from, to), w);
 }
 
-function frToEn(w){
-    if (!fra_eng){
+function frToEn(w) {
+    if (!fra_eng) {
         return undefined;
     }
     let trad = fra_eng.find(([fr]) => fr === w);
-    if (!trad){
+    if (!trad) {
         return undefined;
     }
     return w;
@@ -127,14 +127,14 @@ function createTable(list, id = "dicoTable") {
         // Mi
         td = document.createElement('td');
         if (AbcMi) {
-        abbr = document.createElement('abbr');
-        abbr.title = item[1];
-        abbr.textContent = item[1];
+            abbr = document.createElement('abbr');
+            abbr.title = item[1];
+            abbr.textContent = item[1];
+            td.appendChild(abbr);
+            convertMiFont(td);
         } else {
             td.textContent = miToAudio(item[1]);
         }
-        td.appendChild(abbr);
-        convertMiFont(td);
         tr.appendChild(td);
         // English
         let en = frToEn(item[0]);
