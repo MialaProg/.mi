@@ -35,7 +35,7 @@ initDBs();
 // Remplace les racourcis claviers par la prononciation
 function miToAudio(w) {
     if (!rcc) {
-        return '*' + w;
+        return w;
     }
 
     /*
@@ -52,11 +52,14 @@ function frToEn(w) {
     if (!fra_eng) {
         return undefined;
     }
+
+    w = w.split(/[\s.,;!?]+/)[0];
+
     let trad = fra_eng.find(([fr]) => fr === w);
     if (!trad) {
         return undefined;
     }
-    return w;
+    return trad[1];
 }
 
 // Update padding for content below the search bar
