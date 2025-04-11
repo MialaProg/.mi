@@ -227,11 +227,11 @@ function generateTrainingExercises() {
     trainingContent.innerHTML = ''; // Clear previous content
 
     let currentExerciseIndex = 0;
-    const exercises = [];
+    let exercise = false
 
     // Exercise 1: Match the correct translation
     if (dico) {
-        exercises.push(() => {
+        let exercise = () => {
             const exerciseDiv = document.createElement('div');
             exerciseDiv.classList.add('exercise');
 
@@ -262,7 +262,7 @@ function generateTrainingExercises() {
                 button.addEventListener('click', () => {
                     if (option === correctAnswer) {
                         alert('Correct!');
-                        nextExercise();
+                        generateTrainingExercises();
                     } else {
                         alert('Try again!');
                     }
@@ -271,12 +271,12 @@ function generateTrainingExercises() {
             });
             exerciseDiv.appendChild(buttonsDiv);
             trainingContent.appendChild(exerciseDiv);
-        });
+        };
     }
 
     // Exercise 2: Reorder the sentence
-    if (ctxt) {
-        exercises.push(() => {
+    if (ctxt && Math.random() > 0.6) {
+        exercise = ()=>{
             const exerciseDiv = document.createElement('div');
             exerciseDiv.classList.add('exercise');
 
@@ -310,7 +310,7 @@ function generateTrainingExercises() {
                             .join(' ');
                         if (userAnswer === correctOrder) {
                             alert('Correct!');
-                            nextExercise();
+                            generateTrainingExercises();
                         } else {
                             alert('Try again!');
                         }
@@ -320,25 +320,9 @@ function generateTrainingExercises() {
             });
             exerciseDiv.appendChild(optionsDiv);
             trainingContent.appendChild(exerciseDiv);
-        });
+        };
     }
 
-    function nextExercise() {
-        trainingContent.innerHTML = ''; // Clear previous content
-        currentExerciseIndex++;
-        if (currentExerciseIndex < exercises.length) {
-            exercises[currentExerciseIndex]();
-        } else {
-            const endMessage = document.createElement('p');
-            endMessage.textContent = "Vous avez terminé tous les exercices !";
-            trainingContent.appendChild(endMessage);
-        }
-    }
-
-    // Start the first exercise
-    if (exercises.length > 0) {
-        exercises[currentExerciseIndex]();
-    }
 }
 
 function training(){
