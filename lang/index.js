@@ -244,7 +244,7 @@ function generateTrainingExercises() {
 
         const options = dico
             .sort(() => 0.5 - Math.random())
-            .slice(0, 3)
+            .slice(0, Math.max(5, dico.length)) // Ensure at least 5 options
             .map(item => item[1]);
         if (!options.includes(correctAnswer)) {
             options[Math.floor(Math.random() * options.length)] = correctAnswer;
@@ -277,7 +277,7 @@ function generateTrainingExercises() {
         question.textContent = "Remet cette phrase dans l'ordre !";
         exerciseDiv.appendChild(question);
 
-        const randomSentence = ctxt[Math.floor(Math.random() * ctxt.length)];
+        const randomSentence = ctxt[Math.floor(Math.random() * ctxt.length)][0].split(' ');
         const correctOrder = randomSentence.join(' ');
 
         const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
