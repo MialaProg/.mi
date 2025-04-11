@@ -49,11 +49,11 @@ function miToAudio(w){
 
 function frToEn(w){
     if (!fra_eng){
-        return '(FR: '+w+')';
+        return undefined;
     }
     let trad = fra_eng.find(([fr]) => fr === w);
     if (!trad){
-        return '(FR: '+w+')';
+        return undefined;
     }
     return w;
 }
@@ -125,9 +125,12 @@ function createTable(list, id = "dicoTable") {
         convertMiFont(td);
         tr.appendChild(td);
         // English
-        td = document.createElement('td');
-        td.textContent = frToEn(item[0]);
-        tr.appendChild(td);
+        let en = frToEn(item[0]);
+        if (en) {
+            td = document.createElement('td');
+            td.textContent = en;
+            tr.appendChild(td);
+        }
 
         tbody.appendChild(tr);
     });
