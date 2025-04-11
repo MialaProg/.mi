@@ -333,8 +333,8 @@ function generateTrainingExercises() {
             trainingContent.appendChild(exerciseDiv);
         };
     }
-    
-    exercice();
+
+    exercise();
 }
 
 function training(){
