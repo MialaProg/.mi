@@ -5,7 +5,8 @@ var [dico,
     ctxt,
     indexJS,
     rcc,
-    fra_eng
+    fra_eng,
+    AbcMi
 ] = Array(5).fill(false);
 
 async function fetchFiMi(path, sep=';') {
@@ -26,7 +27,7 @@ async function initDBs() {
     dico = await fetchFiMi('./dico.fimi');
     ctxt = await fetchFiMi('./ctxt.fimi');
     rcc = await fetchFiMi('./rcc.fimi', ':');
-    fra_eng = await fetchFiMi('../ext/fra--eng.fimi', ':');
+    fra_eng = await fetchFiMi('../ext/fra-eng.fimi', ':');
 }
 
 initDBs();
@@ -82,11 +83,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     waitForConvertMiFont();
 
+    // Restore theme
     let savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
         let html = document.querySelector('html');
         html.classList.remove('theme-dark', 'theme-light');
         html.classList.add(savedTheme === 'dark' ? 'theme-dark' : 'theme-light');
+    }
+
+    // Restore alphabet
+    let savedAbc = localStorage.getItem('abc');
+    if (savedAbc) {
+        AbcMi = JSON.parse(savedAbc);
     }
 });
 
@@ -118,9 +126,13 @@ function createTable(list, id = "dicoTable") {
         tr.appendChild(td);
         // Mi
         td = document.createElement('td');
+        if (AbcMi) {
         abbr = document.createElement('abbr');
         abbr.title = item[1];
         abbr.textContent = item[1];
+        } else {
+            td.textContent = miToAudio(item[1]);
+        }
         td.appendChild(abbr);
         convertMiFont(td);
         tr.appendChild(td);
@@ -155,6 +167,12 @@ function changeTheme() {
         html.classList.add('theme-dark');
     }
     localStorage.setItem('theme', html.classList.contains('theme-dark') ? 'dark' : 'light');
+}
+
+// Function to switch the alphabet
+function changeAbc() {
+    AbcMi = !AbcMi;
+    localStorage.setItem('abc', stringify(AbcMi));
 }
 
 function init_search() {
