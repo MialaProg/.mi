@@ -276,7 +276,7 @@ function generateTrainingExercises() {
 
     // Exercise 2: Reorder the sentence
     if (ctxt && Math.random() > 0.6) {
-        exercise = ()=>{
+        exercise = () => {
             const exerciseDiv = document.createElement('div');
             exerciseDiv.classList.add('exercise');
 
@@ -289,10 +289,10 @@ function generateTrainingExercises() {
 
             const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
             const wordButtons = shuffledWords.map(word => {
-                const button = document.createElement('button');
-                button.textContent = word;
-                button.classList.add('button');
-                return button;
+            const button = document.createElement('button');
+            button.textContent = word;
+            button.classList.add('button');
+            return button;
             });
 
             const sentenceDiv = document.createElement('div');
@@ -302,22 +302,33 @@ function generateTrainingExercises() {
             const optionsDiv = document.createElement('div');
             optionsDiv.classList.add('options');
             wordButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    sentenceDiv.appendChild(button);
-                    if (sentenceDiv.childNodes.length === shuffledWords.length) {
-                        const userAnswer = Array.from(sentenceDiv.childNodes)
-                            .map(node => node.textContent)
-                            .join(' ');
-                        if (userAnswer === correctOrder) {
-                            alert('Correct!');
-                            generateTrainingExercises();
-                        } else {
-                            alert('Try again!');
-                        }
-                    }
-                });
+            button.addEventListener('click', () => {
+                if (button.parentNode === optionsDiv) {
+                sentenceDiv.appendChild(button);
+                } else {
                 optionsDiv.appendChild(button);
+                }
+
+                if (sentenceDiv.childNodes.length === shuffledWords.length) {
+                const userAnswer = Array.from(sentenceDiv.childNodes)
+                    .map(node => node.textContent)
+                    .join(' ');
+                if (userAnswer === correctOrder) {
+                    alert('Correct!');
+                    generateTrainingExercises();
+                } else {
+                    alert('Try again!');
+                }
+                }
             });
+            optionsDiv.appendChild(button);
+            });
+
+            // Add a separator between the sentence and the options
+            const separator = document.createElement('hr');
+            separator.classList.add('separator');
+            exerciseDiv.appendChild(separator);
+
             exerciseDiv.appendChild(optionsDiv);
             trainingContent.appendChild(exerciseDiv);
         };
