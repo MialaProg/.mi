@@ -226,12 +226,11 @@ function generateTrainingExercises() {
     const trainingContent = document.getElementById('trainingContent');
     trainingContent.innerHTML = ''; // Clear previous content
 
-    let currentExerciseIndex = 0;
     let exercise = false
 
     // Exercise 1: Match the correct translation
     if (dico) {
-        let exercise = () => {
+        exercise = () => {
             const exerciseDiv = document.createElement('div');
             exerciseDiv.classList.add('exercise');
 
@@ -334,7 +333,14 @@ function generateTrainingExercises() {
         };
     }
 
-    exercise();
+    if (exercise){
+        exercise();
+    }else{
+        const noExerciseDiv = document.createElement('div');
+        noExerciseDiv.classList.add('exercise');
+        noExerciseDiv.textContent = "Aucun exercice disponible pour le moment.";
+        trainingContent.appendChild(noExerciseDiv);
+    }
 }
 
 function training(){
