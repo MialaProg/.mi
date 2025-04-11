@@ -283,15 +283,16 @@ function generateTrainingExercises() {
             question.textContent = "Remet cette phrase dans l'ordre !";
             exerciseDiv.appendChild(question);
 
-            const randomSentence = ctxt[Math.floor(Math.random() * ctxt.length)][0].split(' ');
+            const randomCtxt = ctxt[Math.floor(Math.random() * ctxt.length)];
+            const randomSentence = randomCtxt[1].split(' ');
             const correctOrder = randomSentence.join(' ');
 
             const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
             const wordButtons = shuffledWords.map(word => {
-            const button = document.createElement('button');
-            button.textContent = word;
-            button.classList.add('button');
-            return button;
+                const button = document.createElement('button');
+                button.textContent = word;
+                button.classList.add('button');
+                return button;
             });
 
             const sentenceDiv = document.createElement('div');
@@ -301,26 +302,26 @@ function generateTrainingExercises() {
             const optionsDiv = document.createElement('div');
             optionsDiv.classList.add('options');
             wordButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                if (button.parentNode === optionsDiv) {
-                sentenceDiv.appendChild(button);
-                } else {
-                optionsDiv.appendChild(button);
-                }
+                button.addEventListener('click', () => {
+                    if (button.parentNode === optionsDiv) {
+                        sentenceDiv.appendChild(button);
+                    } else {
+                        optionsDiv.appendChild(button);
+                    }
 
-                if (sentenceDiv.childNodes.length === shuffledWords.length) {
-                const userAnswer = Array.from(sentenceDiv.childNodes)
-                    .map(node => node.textContent)
-                    .join(' ');
-                if (userAnswer === correctOrder) {
-                    alert('Correct!');
-                    generateTrainingExercises();
-                } else {
-                    alert('Try again!');
-                }
-                }
-            });
-            optionsDiv.appendChild(button);
+                    if (sentenceDiv.childNodes.length === shuffledWords.length) {
+                        const userAnswer = Array.from(sentenceDiv.childNodes)
+                            .map(node => node.textContent)
+                            .join(' ');
+                        if (userAnswer === correctOrder) {
+                            alert('Correct! Cela signifie ' + randomCtxt[0]);
+                            generateTrainingExercises();
+                        } else {
+                            alert('Try again!');
+                        }
+                    }
+                });
+                optionsDiv.appendChild(button);
             });
 
             // Add a separator between the sentence and the options
@@ -333,9 +334,9 @@ function generateTrainingExercises() {
         };
     }
 
-    if (exercise){
+    if (exercise) {
         exercise();
-    }else{
+    } else {
         const noExerciseDiv = document.createElement('div');
         noExerciseDiv.classList.add('exercise');
         noExerciseDiv.textContent = "Aucun exercice disponible pour le moment.";
@@ -343,7 +344,7 @@ function generateTrainingExercises() {
     }
 }
 
-function training(){
+function training() {
     generateTrainingExercises();
     openModal(document.getElementById('trainingModal'));
 }
