@@ -28,6 +28,7 @@ async function initDBs() {
     ctxt = await fetchFiMi('./ctxt.fimi');
     rcc = await fetchFiMi('./rcc.fimi', ':');
     fra_eng = await fetchFiMi('../ext/fra-eng.fimi', ':');
+    createTable(dico);
 }
 
 initDBs();
@@ -176,6 +177,7 @@ function changeTheme() {
 function changeAbc() {
     AbcMi = !AbcMi;
     localStorage.setItem('abc', JSON.stringify(AbcMi));
+    createTable(dico);
 }
 
 function init_search() {
