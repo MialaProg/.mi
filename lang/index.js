@@ -188,6 +188,9 @@ function init_search() {
 
         const searchTerm = event.target.value.toLowerCase();
         if (searchTerm.length > 0) {
+            if (searchTerm == 'miabc'){
+                changeAbc();
+            }
             const filteredDico = dico.filter(item =>
                 item.some(field => field.toLowerCase().includes(searchTerm))
             );
