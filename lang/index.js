@@ -107,6 +107,18 @@ function code() {
     init_search();
 }
 
+function setMiText(text, parent) {
+    if (AbcMi) {
+        abbr = document.createElement('abbr');
+        abbr.title = text;
+        abbr.textContent = text;
+        parent.appendChild(abbr);
+        convertMiFont(parent);
+    } else {
+        parent.textContent = miToAudio(text);
+    }
+}
+
 function createTable(list, id = "dicoTable") {
 
     const table = document.createElement('table');
@@ -130,15 +142,7 @@ function createTable(list, id = "dicoTable") {
         tr.appendChild(td);
         // Mi
         td = document.createElement('td');
-        if (AbcMi) {
-            abbr = document.createElement('abbr');
-            abbr.title = item[1];
-            abbr.textContent = item[1];
-            td.appendChild(abbr);
-            convertMiFont(td);
-        } else {
-            td.textContent = miToAudio(item[1]);
-        }
+        setMiText(item[1], td);
         tr.appendChild(td);
         // English
         let en = frToEn(item[0]);
@@ -188,7 +192,7 @@ function init_search() {
 
         const searchTerm = event.target.value.toLowerCase();
         if (searchTerm.length > 0) {
-            if (searchTerm == 'miabc'){
+            if (searchTerm == 'miabc') {
                 changeAbc();
             }
             const filteredDico = dico.filter(item =>
@@ -259,14 +263,16 @@ function generateTrainingExercises() {
             const buttonsDiv = document.createElement('div');
             options.forEach(option => {
                 const button = document.createElement('button');
-                button.textContent = option;
+                setMiText(option, button);
+                // button.textContent = option;
+                button.setAttribute('rep', option);
                 button.classList.add('button');
                 button.addEventListener('click', () => {
                     if (option === correctAnswer) {
-                        alert('Correct!');
+                        alert('Bravo !');
                         generateTrainingExercises();
                     } else {
-                        alert('Try again!');
+                        alert('Essai encore !');
                     }
                 });
                 buttonsDiv.appendChild(button);
@@ -293,7 +299,9 @@ function generateTrainingExercises() {
             const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
             const wordButtons = shuffledWords.map(word => {
                 const button = document.createElement('button');
-                button.textContent = word;
+                setMiText(word, button);
+                // button.textContent = word;
+                button.setAttribute('rep', word);
                 button.classList.add('button');
                 return button;
             });
@@ -314,13 +322,13 @@ function generateTrainingExercises() {
 
                     if (sentenceDiv.childNodes.length === shuffledWords.length) {
                         const userAnswer = Array.from(sentenceDiv.childNodes)
-                            .map(node => node.textContent)
+                            .map(node => node.getAttribute('rep'))
                             .join(' ');
                         if (userAnswer === correctOrder) {
-                            alert('Correct! Cela signifie ' + randomCtxt[0]);
+                            alert('Bravo ! Cela signifie ' + randomCtxt[0]);
                             generateTrainingExercises();
                         } else {
-                            alert('Try again!');
+                            alert('Essai encore !');
                         }
                     }
                 });
