@@ -1,5 +1,6 @@
 elle:she
 partage:sharing
+tu:you
 --original:--
 -able:-able
 -al:-ish
@@ -3627,7 +3628,7 @@ effraie:owl
 effrayant:frightening
 effroi:alarm
 eh bien:now
-elle:it
+//elle:it
 elles:they
 embarras:abashment
 embaucher:employ
@@ -8000,7 +8001,7 @@ trébucher:stumble
 trésor:treasure
 trésorier:cashier
 trêve:truce
-tu:thou
+//tu:thou
 tube:barrel
 tuer:kill
 tuile:tile
