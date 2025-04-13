@@ -347,7 +347,7 @@ function generateTrainingExercises() {
     }
 
     // Exercise 3: Type the correct word
-    else if (dico && exo > 0) {
+    if (dico && exo > 0) {
         exercise = () => {
             const exerciseDiv = document.createElement('div');
             exerciseDiv.classList.add('exercise');
@@ -366,6 +366,7 @@ function generateTrainingExercises() {
             const inputDiv = document.createElement('div');
             inputDiv.classList.add('input-div');
             const typedAnswer = [];
+            const previousAnswers = [];
 
             const checkAnswer = () => {
                 const userAnswer = typedAnswer.join('').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -373,7 +374,9 @@ function generateTrainingExercises() {
                     alert('Bravo !');
                     generateTrainingExercises();
                 } else {
-                    alert('Essai encore !');
+                    previousAnswers.push(userAnswer);
+                    alert(`Essai encore ! Réponses précédentes : ${previousAnswers.join(', ')}`);
+                    generateTrainingExercises();
                 }
             };
 
@@ -384,20 +387,42 @@ function generateTrainingExercises() {
                 inputDiv.appendChild(span);
             }
 
-            document.addEventListener('keydown', (event) => {
-                if (typedAnswer.length < correctAnswer.length && /^[a-zA-ZÀ-ÿ]$/.test(event.key)) {
-                    typedAnswer.push(event.key);
-                    inputDiv.children[typedAnswer.length - 1].textContent = event.key;
-                } else if (event.key === 'Backspace' && typedAnswer.length > 0) {
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'text';
+            hiddenInput.style.position = 'absolute';
+            hiddenInput.style.opacity = 0;
+            hiddenInput.autocapitalize = 'none';
+            hiddenInput.autocomplete = 'off';
+            hiddenInput.autocorrect = 'off';
+            hiddenInput.spellcheck = false;
+            document.body.appendChild(hiddenInput);
+            hiddenInput.focus();
+
+            hiddenInput.addEventListener('input', (event) => {
+                const value = event.target.value;
+                if (value.length > typedAnswer.length && /^[a-zA-ZÀ-ÿ]$/.test(value.slice(-1))) {
+                    typedAnswer.push(value.slice(-1));
+                    inputDiv.children[typedAnswer.length - 1].textContent = value.slice(-1);
+                } else if (value.length < typedAnswer.length) {
                     typedAnswer.pop();
                     inputDiv.children[typedAnswer.length].textContent = '_';
-                } else if (event.key === 'Enter' && typedAnswer.length === correctAnswer.length) {
+                }
+                event.target.value = ''; // Clear the input to capture next key
+            });
+
+            hiddenInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' && typedAnswer.length === correctAnswer.length) {
                     checkAnswer();
                 }
             });
 
             exerciseDiv.appendChild(inputDiv);
             trainingContent.appendChild(exerciseDiv);
+
+            // Clean up hidden input when exercise changes
+            exerciseDiv.addEventListener('DOMNodeRemoved', () => {
+                hiddenInput.remove();
+            });
         };
     }
  
