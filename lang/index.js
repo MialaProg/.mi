@@ -347,7 +347,7 @@ function generateTrainingExercises() {
     }
 
     // Exercise 3: Type the correct word
-    else if (dico && exo > 0.8) {
+    else if (dico && exo > 0) {
         exercise = () => {
             const exerciseDiv = document.createElement('div');
             exerciseDiv.classList.add('exercise');
@@ -400,8 +400,7 @@ function generateTrainingExercises() {
             trainingContent.appendChild(exerciseDiv);
         };
     }
-    
-
+ 
     if (exercise) {
         exercise();
     } else {
