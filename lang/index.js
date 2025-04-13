@@ -277,7 +277,7 @@ function generateTrainingExercises() {
     }
 
     // Exercise 2: Reorder the sentence
-    if (ctxt && Math.random() > 0.6) {
+    if (ctxt && Math.random() > 0.9) {
         exercise = () => {
             const exerciseDiv = document.createElement('div');
             exerciseDiv.classList.add('exercise');
