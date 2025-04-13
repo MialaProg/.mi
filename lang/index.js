@@ -354,7 +354,7 @@ function generateTrainingExercises() {
     // Exercise 3: Type the correct word
     if (dico && exo > 0) {
         exercise = () => {
-            createExerciseDiv("Tape le mot correspondant :", (exerciseDiv) => {
+            createExerciseDiv("V2. Tape le mot correspondant :", (exerciseDiv) => {
                 const randomWord = dico[Math.floor(Math.random() * dico.length)];
                 const correctAnswer = randomWord[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
@@ -363,6 +363,9 @@ function generateTrainingExercises() {
                 exerciseDiv.appendChild(wordDisplay);
 
                 const inputDiv = document.createElement('div');
+                inputDiv.addEventListener('click', () => {
+                    hiddenInput.focus();
+                });
                 inputDiv.classList.add('input-div');
                 const typedAnswer = [];
                 const previousAnswers = [];
@@ -399,18 +402,18 @@ function generateTrainingExercises() {
 
                 hiddenInput.addEventListener('input', (event) => {
                     const value = event.target.value;
-                    if (value.length > typedAnswer.length && /^[a-zA-ZÀ-ÿ]$/.test(value.slice(-1))) {
+                    if (value.length > 0 && /^[a-zA-ZÀ-ÿ]$/.test(value.slice(-1))) {
                         typedAnswer.push(value.slice(-1));
                         inputDiv.children[typedAnswer.length - 1].textContent = value.slice(-1);
-                    } else if (value.length < typedAnswer.length) {
-                        typedAnswer.pop();
-                        inputDiv.children[typedAnswer.length].textContent = '_';
+                        event.target.value = ''; // Clear the input to capture next key
                     }
-                    event.target.value = ''; // Clear the input to capture next key
                 });
 
                 hiddenInput.addEventListener('keydown', (event) => {
-                    if (event.key === 'Enter' && typedAnswer.length === correctAnswer.length) {
+                    if (event.key === 'Backspace' && typedAnswer.length > 0) {
+                        typedAnswer.pop();
+                        inputDiv.children[typedAnswer.length].textContent = '_';
+                    } else if (event.key === 'Enter' && typedAnswer.length === correctAnswer.length) {
                         checkAnswer();
                     }
                 });
@@ -430,7 +433,7 @@ function generateTrainingExercises() {
             });
         };
     }
- 
+
     if (exercise) {
         exercise();
     } else {
