@@ -365,7 +365,7 @@ function generateTrainingExercises() {
             randomWord = getRandomItem(dico);
         }
 
-        const correctAnswer = randomWord[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        const correctAnswers = [randomWord[1], miToAudio(randomWord[1])];
 
         const wordDisplay = document.createElement('strong');
         wordDisplay.textContent = randomWord[0];
@@ -376,21 +376,18 @@ function generateTrainingExercises() {
             hiddenInput.focus();
         });
         inputDiv.classList.add('input-div');
-        const typedAnswer = [];
-        const previousAnswers = [];
 
         const checkAnswer = () => {
-            const userAnswer = typedAnswer.join('').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-            if (userAnswer === correctAnswer) {
+            const userAnswer = hiddenInput.value;
+            if (correctAnswers.includes(userAnswer)) {
                 alert('Bravo !');
                 generateTrainingExercises();
             } else {
-                previousAnswers.push(userAnswer);
-                alert(`Essai encore ! Réponses précédentes : ${previousAnswers.join(', ')}`);
+                alert(`Essai encore !`);
             }
         };
 
-        for (let i = 0; i < correctAnswer.length; i++) {
+        for (let i = 0; i < 10; i++) {
             const span = document.createElement('span');
             span.textContent = '_';
             span.classList.add('input-char');
@@ -410,21 +407,18 @@ function generateTrainingExercises() {
 
         hiddenInput.addEventListener('input', (event) => {
             const value = event.target.value;
-            if (value.length > 0 && /^[a-zA-ZÀ-ÿ]$/.test(value.slice(-1))) {
-                typedAnswer.push(value.slice(-1));
-                inputDiv.children[typedAnswer.length - 1].textContent = value.slice(-1);
-                event.target.value = ''; // Clear the input to capture next key
-            }
+            inputDiv.children[typedAnswer.length - 1].textContent = value + (value.length < 10) ? '_' * (10 - value.length) : '';
         });
-
         hiddenInput.addEventListener('keydown', (event) => {
-            if (event.key === 'Backspace' && typedAnswer.length > 0) {
-                typedAnswer.pop();
-                inputDiv.children[typedAnswer.length].textContent = '_';
-            } else if (event.key === 'Enter' && typedAnswer.length === correctAnswer.length) {
+            if (event.key === 'Enter') {
                 checkAnswer();
             }
         });
+
+        // hiddenInput.addEventListener('focusout', () => {
+        //     // Refocus the input when it loses focus (useful for mobile)
+        //     setTimeout(() => hiddenInput.focus(), 0);
+        // });
 
         exerciseDiv.appendChild(inputDiv);
 
