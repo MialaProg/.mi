@@ -228,6 +228,12 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+function getRandomItem(list){
+    if (list && list.length > 0) {
+        return list[Math.floor(Math.random() * list.length)];
+    }
+    return null;
+}
 
 function generateTrainingExercises() {
     const trainingContent = document.getElementById('trainingContent');
@@ -265,7 +271,7 @@ function generateTrainingExercises() {
     if (dico) {
         exercise = () => {
             createExerciseDiv("Choisi la bonne traduction: ", (exerciseDiv) => {
-                const randomWord = dico[Math.floor(Math.random() * dico.length)];
+                const randomWord = getRandomItem(dico);
                 const correctAnswer = randomWord[1];
 
                 const wordDisplay = document.createElement('strong');
@@ -300,7 +306,7 @@ function generateTrainingExercises() {
     if (ctxt && exo > 0.9) {
         exercise = () => {
             createExerciseDiv("Remet cette phrase dans l'ordre !", (exerciseDiv) => {
-                const randomCtxt = ctxt[Math.floor(Math.random() * ctxt.length)];
+                const randomCtxt = getRandomItem(ctxt);
                 const randomSentence = randomCtxt[1].split(' ');
                 const correctOrder = randomSentence.join(' ');
 
@@ -354,8 +360,8 @@ function generateTrainingExercises() {
     // Exercise 3: Type the correct word
     if (dico && exo > 0) {
         exercise = () => {
-            createExerciseDiv("V2. Tape le mot correspondant :", (exerciseDiv) => {
-                const randomWord = dico[Math.floor(Math.random() * dico.length)];
+            createExerciseDiv("V3. Tape le mot correspondant :", (exerciseDiv) => {
+                const randomWord = getRandomItem(dico);
                 const correctAnswer = randomWord[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
                 const wordDisplay = document.createElement('strong');
@@ -429,7 +435,12 @@ function generateTrainingExercises() {
                     });
                 });
 
-                observer.observe(exerciseDiv.parentNode, { childList: true });
+                // Ensure exerciseDiv is appended to the DOM before observing
+                setTimeout(() => {
+                    if (exerciseDiv.parentNode) {
+                        observer.observe(exerciseDiv.parentNode, { childList: true });
+                    }
+                }, 0);
             });
         };
     }
