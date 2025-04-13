@@ -282,8 +282,9 @@ function generateTrainingExercises() {
         };
     }
 
+    let exo = Math.random();
     // Exercise 2: Reorder the sentence
-    if (ctxt && Math.random() > 0.9) {
+    if (ctxt && exo > 0.9) {
         exercise = () => {
             const exerciseDiv = document.createElement('div');
             exerciseDiv.classList.add('exercise');
@@ -344,6 +345,62 @@ function generateTrainingExercises() {
             trainingContent.appendChild(exerciseDiv);
         };
     }
+
+    // Exercise 3: Type the correct word
+    else if (dico && exo > 0.8) {
+        exercise = () => {
+            const exerciseDiv = document.createElement('div');
+            exerciseDiv.classList.add('exercise');
+
+            const question = document.createElement('p');
+            question.textContent = "Tape le mot correspondant :";
+            exerciseDiv.appendChild(question);
+
+            const randomWord = dico[Math.floor(Math.random() * dico.length)];
+            const correctAnswer = randomWord[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+            const wordDisplay = document.createElement('strong');
+            wordDisplay.textContent = randomWord[0];
+            exerciseDiv.appendChild(wordDisplay);
+
+            const inputDiv = document.createElement('div');
+            inputDiv.classList.add('input-div');
+            const typedAnswer = [];
+
+            const checkAnswer = () => {
+                const userAnswer = typedAnswer.join('').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    alert('Bravo !');
+                    generateTrainingExercises();
+                } else {
+                    alert('Essai encore !');
+                }
+            };
+
+            for (let i = 0; i < correctAnswer.length; i++) {
+                const span = document.createElement('span');
+                span.textContent = '_';
+                span.classList.add('input-char');
+                inputDiv.appendChild(span);
+            }
+
+            document.addEventListener('keydown', (event) => {
+                if (typedAnswer.length < correctAnswer.length && /^[a-zA-ZÀ-ÿ]$/.test(event.key)) {
+                    typedAnswer.push(event.key);
+                    inputDiv.children[typedAnswer.length - 1].textContent = event.key;
+                } else if (event.key === 'Backspace' && typedAnswer.length > 0) {
+                    typedAnswer.pop();
+                    inputDiv.children[typedAnswer.length].textContent = '_';
+                } else if (event.key === 'Enter' && typedAnswer.length === correctAnswer.length) {
+                    checkAnswer();
+                }
+            });
+
+            exerciseDiv.appendChild(inputDiv);
+            trainingContent.appendChild(exerciseDiv);
+        };
+    }
+    
 
     if (exercise) {
         exercise();
