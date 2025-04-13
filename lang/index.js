@@ -417,9 +417,16 @@ function generateTrainingExercises() {
 
                 exerciseDiv.appendChild(inputDiv);
 
-                exerciseDiv.addEventListener('DOMNodeRemoved', () => {
-                    hiddenInput.remove();
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.removedNodes.length > 0 && Array.from(mutation.removedNodes).includes(exerciseDiv)) {
+                            hiddenInput.remove();
+                            observer.disconnect();
+                        }
+                    });
                 });
+
+                observer.observe(exerciseDiv.parentNode, { childList: true });
             });
         };
     }
