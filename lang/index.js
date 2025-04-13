@@ -235,50 +235,63 @@ function generateTrainingExercises() {
 
     let exercise = false
 
+    // Helper function to create and append an exercise div
+    function createExerciseDiv(questionText, contentCallback) {
+        const exerciseDiv = document.createElement('div');
+        exerciseDiv.classList.add('exercise');
+
+        const question = document.createElement('p');
+        question.textContent = questionText;
+        exerciseDiv.appendChild(question);
+
+        contentCallback(exerciseDiv);
+
+        trainingContent.appendChild(exerciseDiv);
+    }
+
+    // Helper function to generate random options
+    function generateRandomOptions(correctAnswer, sourceArray, min = 3, max = 7) {
+        const options = sourceArray
+            .sort(() => 0.5 - Math.random())
+            .slice(0, Math.floor(Math.random() * (max - min + 1)) + min)
+            .map(item => item[1]);
+        if (!options.includes(correctAnswer)) {
+            options[Math.floor(Math.random() * options.length)] = correctAnswer;
+        }
+        return options;
+    }
+
     // Exercise 1: Match the correct translation
     if (dico) {
         exercise = () => {
-            const exerciseDiv = document.createElement('div');
-            exerciseDiv.classList.add('exercise');
+            createExerciseDiv("Choisi la bonne traduction: ", (exerciseDiv) => {
+                const randomWord = dico[Math.floor(Math.random() * dico.length)];
+                const correctAnswer = randomWord[1];
 
-            const question = document.createElement('p');
-            question.textContent = "Choisi la bonne traduction: ";
-            exerciseDiv.appendChild(question);
+                const wordDisplay = document.createElement('strong');
+                wordDisplay.textContent = randomWord[0];
+                exerciseDiv.appendChild(wordDisplay);
 
-            const randomWord = dico[Math.floor(Math.random() * dico.length)];
-            const correctAnswer = randomWord[1];
+                const options = generateRandomOptions(correctAnswer, dico);
 
-            const wordDisplay = document.createElement('strong');
-            wordDisplay.textContent = randomWord[0];
-            exerciseDiv.appendChild(wordDisplay);
-
-            const options = dico
-                .sort(() => 0.5 - Math.random())
-                .slice(0, Math.floor(Math.random() * 5) + 3) // Ensure between 3 and 7 options
-                .map(item => item[1]);
-            if (!options.includes(correctAnswer)) {
-                options[Math.floor(Math.random() * options.length)] = correctAnswer;
-            }
-
-            const buttonsDiv = document.createElement('div');
-            options.forEach(option => {
-                const button = document.createElement('button');
-                setMiText(option, button);
-                // button.textContent = option;
-                button.setAttribute('rep', option);
-                button.classList.add('button');
-                button.addEventListener('click', () => {
-                    if (option === correctAnswer) {
-                        alert('Bravo !');
-                        generateTrainingExercises();
-                    } else {
-                        alert('Essai encore !');
-                    }
+                const buttonsDiv = document.createElement('div');
+                options.forEach(option => {
+                    const button = document.createElement('button');
+                    setMiText(option, button);
+                    button.setAttribute('rep', option);
+                    button.classList.add('button');
+                    button.addEventListener('click', () => {
+                        if (option === correctAnswer) {
+                            alert('Bravo !');
+                            generateTrainingExercises();
+                        } else {
+                            alert('Essai encore !');
+                        }
+                    });
+                    buttonsDiv.appendChild(button);
                 });
-                buttonsDiv.appendChild(button);
+                exerciseDiv.appendChild(buttonsDiv);
             });
-            exerciseDiv.appendChild(buttonsDiv);
-            trainingContent.appendChild(exerciseDiv);
         };
     }
 
@@ -286,142 +299,127 @@ function generateTrainingExercises() {
     // Exercise 2: Reorder the sentence
     if (ctxt && exo > 0.9) {
         exercise = () => {
-            const exerciseDiv = document.createElement('div');
-            exerciseDiv.classList.add('exercise');
+            createExerciseDiv("Remet cette phrase dans l'ordre !", (exerciseDiv) => {
+                const randomCtxt = ctxt[Math.floor(Math.random() * ctxt.length)];
+                const randomSentence = randomCtxt[1].split(' ');
+                const correctOrder = randomSentence.join(' ');
 
-            const question = document.createElement('p');
-            question.textContent = "Remet cette phrase dans l'ordre !";
-            exerciseDiv.appendChild(question);
-
-            const randomCtxt = ctxt[Math.floor(Math.random() * ctxt.length)];
-            const randomSentence = randomCtxt[1].split(' ');
-            const correctOrder = randomSentence.join(' ');
-
-            const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
-            const wordButtons = shuffledWords.map(word => {
-                const button = document.createElement('button');
-                setMiText(word, button);
-                // button.textContent = word;
-                button.setAttribute('rep', word);
-                button.classList.add('button');
-                return button;
-            });
-
-            const sentenceDiv = document.createElement('div');
-            sentenceDiv.classList.add('sentence');
-            exerciseDiv.appendChild(sentenceDiv);
-
-            const optionsDiv = document.createElement('div');
-            optionsDiv.classList.add('options');
-            wordButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    if (button.parentNode === optionsDiv) {
-                        sentenceDiv.appendChild(button);
-                    } else {
-                        optionsDiv.appendChild(button);
-                    }
-
-                    if (sentenceDiv.childNodes.length === shuffledWords.length) {
-                        const userAnswer = Array.from(sentenceDiv.childNodes)
-                            .map(node => node.getAttribute('rep'))
-                            .join(' ');
-                        if (userAnswer === correctOrder) {
-                            alert('Bravo ! Cela signifie ' + randomCtxt[0]);
-                            generateTrainingExercises();
-                        } else {
-                            alert('Essai encore !');
-                        }
-                    }
+                const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
+                const wordButtons = shuffledWords.map(word => {
+                    const button = document.createElement('button');
+                    setMiText(word, button);
+                    button.setAttribute('rep', word);
+                    button.classList.add('button');
+                    return button;
                 });
-                optionsDiv.appendChild(button);
+
+                const sentenceDiv = document.createElement('div');
+                sentenceDiv.classList.add('sentence');
+                exerciseDiv.appendChild(sentenceDiv);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('options');
+                wordButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        if (button.parentNode === optionsDiv) {
+                            sentenceDiv.appendChild(button);
+                        } else {
+                            optionsDiv.appendChild(button);
+                        }
+
+                        if (sentenceDiv.childNodes.length === shuffledWords.length) {
+                            const userAnswer = Array.from(sentenceDiv.childNodes)
+                                .map(node => node.getAttribute('rep'))
+                                .join(' ');
+                            if (userAnswer === correctOrder) {
+                                alert('Bravo ! Cela signifie ' + randomCtxt[0]);
+                                generateTrainingExercises();
+                            } else {
+                                alert('Essai encore !');
+                            }
+                        }
+                    });
+                    optionsDiv.appendChild(button);
+                });
+
+                const separator = document.createElement('hr');
+                separator.classList.add('separator');
+                exerciseDiv.appendChild(separator);
+
+                exerciseDiv.appendChild(optionsDiv);
             });
-
-            // Add a separator between the sentence and the options
-            const separator = document.createElement('hr');
-            separator.classList.add('separator');
-            exerciseDiv.appendChild(separator);
-
-            exerciseDiv.appendChild(optionsDiv);
-            trainingContent.appendChild(exerciseDiv);
         };
     }
 
     // Exercise 3: Type the correct word
     if (dico && exo > 0) {
         exercise = () => {
-            const exerciseDiv = document.createElement('div');
-            exerciseDiv.classList.add('exercise');
+            createExerciseDiv("Tape le mot correspondant :", (exerciseDiv) => {
+                const randomWord = dico[Math.floor(Math.random() * dico.length)];
+                const correctAnswer = randomWord[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-            const question = document.createElement('p');
-            question.textContent = "Tape le mot correspondant :";
-            exerciseDiv.appendChild(question);
+                const wordDisplay = document.createElement('strong');
+                wordDisplay.textContent = randomWord[0];
+                exerciseDiv.appendChild(wordDisplay);
 
-            const randomWord = dico[Math.floor(Math.random() * dico.length)];
-            const correctAnswer = randomWord[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                const inputDiv = document.createElement('div');
+                inputDiv.classList.add('input-div');
+                const typedAnswer = [];
+                const previousAnswers = [];
 
-            const wordDisplay = document.createElement('strong');
-            wordDisplay.textContent = randomWord[0];
-            exerciseDiv.appendChild(wordDisplay);
+                const checkAnswer = () => {
+                    const userAnswer = typedAnswer.join('').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                    if (userAnswer === correctAnswer) {
+                        alert('Bravo !');
+                        generateTrainingExercises();
+                    } else {
+                        previousAnswers.push(userAnswer);
+                        alert(`Essai encore ! Réponses précédentes : ${previousAnswers.join(', ')}`);
+                        generateTrainingExercises();
+                    }
+                };
 
-            const inputDiv = document.createElement('div');
-            inputDiv.classList.add('input-div');
-            const typedAnswer = [];
-            const previousAnswers = [];
-
-            const checkAnswer = () => {
-                const userAnswer = typedAnswer.join('').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-                if (userAnswer === correctAnswer) {
-                    alert('Bravo !');
-                    generateTrainingExercises();
-                } else {
-                    previousAnswers.push(userAnswer);
-                    alert(`Essai encore ! Réponses précédentes : ${previousAnswers.join(', ')}`);
-                    generateTrainingExercises();
+                for (let i = 0; i < correctAnswer.length; i++) {
+                    const span = document.createElement('span');
+                    span.textContent = '_';
+                    span.classList.add('input-char');
+                    inputDiv.appendChild(span);
                 }
-            };
 
-            for (let i = 0; i < correctAnswer.length; i++) {
-                const span = document.createElement('span');
-                span.textContent = '_';
-                span.classList.add('input-char');
-                inputDiv.appendChild(span);
-            }
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'text';
+                hiddenInput.style.position = 'absolute';
+                hiddenInput.style.opacity = 0;
+                hiddenInput.autocapitalize = 'none';
+                hiddenInput.autocomplete = 'off';
+                hiddenInput.autocorrect = 'off';
+                hiddenInput.spellcheck = false;
+                document.body.appendChild(hiddenInput);
+                hiddenInput.focus();
 
-            const hiddenInput = document.createElement('input');
-            hiddenInput.type = 'text';
-            hiddenInput.style.position = 'absolute';
-            hiddenInput.style.opacity = 0;
-            hiddenInput.autocapitalize = 'none';
-            hiddenInput.autocomplete = 'off';
-            hiddenInput.autocorrect = 'off';
-            hiddenInput.spellcheck = false;
-            document.body.appendChild(hiddenInput);
-            hiddenInput.focus();
+                hiddenInput.addEventListener('input', (event) => {
+                    const value = event.target.value;
+                    if (value.length > typedAnswer.length && /^[a-zA-ZÀ-ÿ]$/.test(value.slice(-1))) {
+                        typedAnswer.push(value.slice(-1));
+                        inputDiv.children[typedAnswer.length - 1].textContent = value.slice(-1);
+                    } else if (value.length < typedAnswer.length) {
+                        typedAnswer.pop();
+                        inputDiv.children[typedAnswer.length].textContent = '_';
+                    }
+                    event.target.value = ''; // Clear the input to capture next key
+                });
 
-            hiddenInput.addEventListener('input', (event) => {
-                const value = event.target.value;
-                if (value.length > typedAnswer.length && /^[a-zA-ZÀ-ÿ]$/.test(value.slice(-1))) {
-                    typedAnswer.push(value.slice(-1));
-                    inputDiv.children[typedAnswer.length - 1].textContent = value.slice(-1);
-                } else if (value.length < typedAnswer.length) {
-                    typedAnswer.pop();
-                    inputDiv.children[typedAnswer.length].textContent = '_';
-                }
-                event.target.value = ''; // Clear the input to capture next key
-            });
+                hiddenInput.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' && typedAnswer.length === correctAnswer.length) {
+                        checkAnswer();
+                    }
+                });
 
-            hiddenInput.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter' && typedAnswer.length === correctAnswer.length) {
-                    checkAnswer();
-                }
-            });
+                exerciseDiv.appendChild(inputDiv);
 
-            exerciseDiv.appendChild(inputDiv);
-            trainingContent.appendChild(exerciseDiv);
-
-            // Clean up hidden input when exercise changes
-            exerciseDiv.addEventListener('DOMNodeRemoved', () => {
-                hiddenInput.remove();
+                exerciseDiv.addEventListener('DOMNodeRemoved', () => {
+                    hiddenInput.remove();
+                });
             });
         };
     }
