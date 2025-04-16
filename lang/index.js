@@ -282,7 +282,7 @@ function generateTrainingExercises() {
     }
 
     // Exercise 1: Match the correct translation
-    createExercise(.05, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
+    createExercise(.5, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
         const randomWord = getRandomItem(dico);
         const correctAnswer = randomWord[1];
 
@@ -312,7 +312,7 @@ function generateTrainingExercises() {
     });
 
     // Exercise 2: Reorder the sentence
-    createExercise(.03, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
+    createExercise(.3, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
         const randomCtxt = getRandomItem(ctxt);
         const randomSentence = randomCtxt[1].split(' ');
         const correctOrder = randomSentence.join(' ');
@@ -363,7 +363,7 @@ function generateTrainingExercises() {
     });
 
     // Exercise 3: Type the correct word
-    createExercise(1.2, dico, "Tape le mot correspondant :", (exerciseDiv) => {
+    createExercise(.2, dico, "Tape le mot correspondant :", (exerciseDiv) => {
         let randomWord = ['', 'n o t']
         while (randomWord[1].includes(' ')) {
             randomWord = getRandomItem(dico);
