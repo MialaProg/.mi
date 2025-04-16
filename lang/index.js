@@ -10,8 +10,9 @@ var [dico,
     fra_eng,
     AbcMi,
     exercise,
-    exoNum
-] = Array(8).fill(false);
+    exoNum,
+    checkAns
+] = Array(9).fill(false);
 
 async function fetchFiMi(path, sep = ';') {
     try {
