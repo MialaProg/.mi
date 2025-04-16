@@ -409,7 +409,7 @@ function generateTrainingExercises() {
         hiddenInput.addEventListener('input', (event) => {
             const value = event.target.value;
             console.log(value);
-            inputDiv.innerHTML = value + ((value.length < 10) ? '_' * (10 - value.length) : '');
+            inputDiv.innerHTML = value + '_'.repeat(Math.max(0, 10 - value.length));
         });
         hiddenInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
