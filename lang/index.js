@@ -32,6 +32,7 @@ async function initDBs() {
     ctxt = await fetchFiMi('./ctxt.fimi');
     rcc = await fetchFiMi('./rcc.fimi', ':');
     fra_eng = await fetchFiMi('../ext/fra-eng.fimi', ':');
+    dico = dico.filter(item => !item[0].startsWith('_'));
     createTable(dico);
 }
 
@@ -39,7 +40,7 @@ initDBs();
 
 // Remplace les racourcis claviers par la prononciation
 function miToAudio(w) {
-    if (!rcc) {
+    if (!(rcc && Array.isArray(rcc))) {
         return w;
     }
 
