@@ -45,19 +45,16 @@ function miToAudio(w) {
     }
 
     /*
-        for (let [from, to] of rcc) {
-        w = w.split(from).join(to);
-    }
-    return w;
+    Rcc : [[a,b],[c,d],...]
+    w : A string
+    Remplace les occurences de a par b, c par d, etc.
     */
-
-    return rcc.reduce((acc, [from, to]) => {
-        try {
-            acc.replaceAll(from, to)
-        } catch (e) {
-            console.log(rcc); console.log(acc);
-        }
-    }, w);
+    rcc.forEach(([shortcut, pronunciation]) => {
+        const regex = new RegExp(shortcut, 'g');
+        w = w.replace(regex, pronunciation);
+    });
+    return w;
+ 
 }
 
 function frToEn(w) {
