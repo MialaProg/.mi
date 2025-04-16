@@ -278,7 +278,7 @@ function generateTrainingExercises() {
     }
 
     // Exercise 1: Match the correct translation
-    createExercise(.5, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
+    createExercise(.05, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
         const randomWord = getRandomItem(dico);
         const correctAnswer = randomWord[1];
 
@@ -308,7 +308,7 @@ function generateTrainingExercises() {
     });
 
     // Exercise 2: Reorder the sentence
-    createExercise(.3, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
+    createExercise(.03, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
         const randomCtxt = getRandomItem(ctxt);
         const randomSentence = randomCtxt[1].split(' ');
         const correctOrder = randomSentence.join(' ');
@@ -357,9 +357,9 @@ function generateTrainingExercises() {
 
         exerciseDiv.appendChild(optionsDiv);
     });
-
+ 
     // Exercise 3: Type the correct word
-    createExercise(.2, dico, "Tape le mot correspondant :", (exerciseDiv) => {
+    createExercise(1.2, dico, "Tape le mot correspondant :", (exerciseDiv) => {
         let randomWord = ['', 'n o t']
         while (randomWord[1].includes(' ')) {
             randomWord = getRandomItem(dico);
@@ -388,10 +388,7 @@ function generateTrainingExercises() {
         };
 
         for (let i = 0; i < 10; i++) {
-            const span = document.createElement('span');
-            span.textContent = '_';
-            span.classList.add('input-char');
-            inputDiv.appendChild(span);
+            inputDiv.textContent += '_';
         }
 
         const hiddenInput = document.createElement('input');
@@ -407,7 +404,7 @@ function generateTrainingExercises() {
 
         hiddenInput.addEventListener('input', (event) => {
             const value = event.target.value;
-            inputDiv.children[typedAnswer.length - 1].textContent = value + (value.length < 10) ? '_' * (10 - value.length) : '';
+            inputDiv.innerHTML = value + (value.length < 10) ? '_' * (10 - value.length) : '';
         });
         hiddenInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
