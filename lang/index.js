@@ -51,7 +51,13 @@ function miToAudio(w) {
     return w;
     */
 
-    return rcc.reduce((acc, [from, to]) => acc.replaceAll(from, to), w);
+    return rcc.reduce((acc, [from, to]) => {
+        try {
+            acc.replaceAll(from, to)
+        } catch (e) {
+            console.log(rcc); console.log(acc);
+        }
+    }, w);
 }
 
 function frToEn(w) {
@@ -358,7 +364,7 @@ function generateTrainingExercises() {
 
         exerciseDiv.appendChild(optionsDiv);
     });
- 
+
     // Exercise 3: Type the correct word
     createExercise(1.2, dico, "Tape le mot correspondant :", (exerciseDiv) => {
         let randomWord = ['', 'n o t']
