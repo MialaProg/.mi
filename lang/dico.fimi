@@ -107,7 +107,8 @@ réponse;rép
 ensemble;AsAbl
 robot;robo
 machine;robo
-mer;go;o
+océan;go;o
+mer;séo;o
 eau;o
 lac;mIgo;o
 perdre;pèrdèr;pèrd
@@ -134,7 +135,7 @@ bon;boné
 mauvais;noné;boné
 plus;pI
 pain;pan
-finalement;finEMENT
+_finalement;finEMENT
 trop;pIr;pI
 pas assez;mIr;pI
 avance;avAs
