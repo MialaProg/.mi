@@ -1,6 +1,7 @@
 elle:she
 partage:sharing
 tu:you
+aller:go
 --original:--
 -able:-able
 -al:-ish
@@ -1314,7 +1315,7 @@ aliéniste:psychiatrist
 aliéné:lunatic
 allaiter:suckle
 allemand:German
-aller:fare
+//aller:fare
 aller en pélerinage:go on pilgrimage
 aller en véhicule:go
 aller à la selle:defecate
