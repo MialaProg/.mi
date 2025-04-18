@@ -20,7 +20,7 @@ function getExoPts(w) {
     if (!exoPts) {
 
         function initList() {
-            exoPts = ['_XP', 0];
+            exoPts = [['_XP', 0]];
             // exoPts = dico.map(item => [item, 0]);
         }
 
@@ -444,7 +444,10 @@ function generateTrainingExercises() {
     // Exercise 3: Type the correct word
     createExercise(.2, dico, "Tape le mot correspondant :", (exerciseDiv) => {
         let randomWord = ['', 'n o t']
+        let i  = 0
         while (randomWord[1].includes(' ')) {
+            i += 1
+            if (i < 100){alert('Erreur Inf404: Mot non trouvé.');return;}
             addExoPts(randomWord[0], 1);
             randomWord = getItem4Exo(ctxt); //getRandomItem(dico);
         }
