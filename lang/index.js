@@ -38,6 +38,8 @@ function getExoPts(w) {
     }
 
     const item = exoPts.find(([key]) => key === w);
+
+    console.log('Get exoPts', w, item);
     return item ? item[1] : 0;
 }
 
@@ -121,7 +123,6 @@ async function initDBs() {
     rcc = await fetchFiMi('./rcc.fimi', ':');
     fra_eng = await fetchFiMi('../ext/fra-eng.fimi', ':');
     dico = dico.filter(item => !item[0].startsWith('_'));
-    exoPts = dico.map(item => [item, 0]);
     function showAfterLoading() {
         document.querySelectorAll('.is-hidden').forEach(el => el.classList.remove('is-hidden'));
     }
@@ -483,7 +484,7 @@ function generateTrainingExercises() {
         while (randomWord[1].includes(' ')) {
             console.log('i', i, randomWord);
             i += 1
-            if (i < 100){alert('Erreur Inf404: Mot non trouvé.');return;}
+            if (i > 100){alert('Erreur Inf404: Mot non trouvé.');return;}
             addExoPts(randomWord[0], 1);
             randomWord = getItem4Exo(dico); //getRandomItem(dico);
         }
