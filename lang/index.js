@@ -42,6 +42,7 @@ function getExoPts(w) {
 }
 
 function setExoPts(w, val) {
+    console.log('Set exoPts', w, val);
     const itemIndex = exoPts.findIndex(([key]) => key === w);
     if (itemIndex !== -1) {
         exoPts[itemIndex] = [w, val];
