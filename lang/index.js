@@ -70,7 +70,8 @@ function addExoPts(w, val) {
 
 /* Functions to save/load exoPts to/from a file */
 function saveExoPtsToFile() {
-    const encryptedExoPts = btoa(JSON.stringify(exoPts)); // Encrypt using Base64
+    const utf8EncodedExoPts = new TextEncoder().encode(JSON.stringify(exoPts));
+    const encryptedExoPts = btoa(String.fromCharCode(...utf8EncodedExoPts)); // Encrypt using Base64
     const exoPtsBlob = new Blob([encryptedExoPts], { type: 'application/json' });
     const url = URL.createObjectURL(exoPtsBlob);
     const a = document.createElement('a');
@@ -84,7 +85,8 @@ function loadExoPtsFromFile(file) {
     const reader = new FileReader();
     reader.onload = (event) => {
         try {
-            const decryptedExoPts = JSON.parse(atob(event.target.result)); // Decrypt using Base64
+            // Decrypt using Base64
+            JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(event.target.result), c => c.charCodeAt(0))))
             if (Array.isArray(decryptedExoPts)) {
                 exoPts = decryptedExoPts;
                 localStorage.setItem('exoPts', JSON.stringify(exoPts));
