@@ -478,9 +478,10 @@ function generateTrainingExercises() {
 
     // Exercise 3: Type the correct word
     createExercise(.2, dico, "Tape le mot correspondant :", (exerciseDiv) => {
-        let randomWord = ['', 'n o t']
+        let randomWord = ['_NOT', 'n o t'];
         let i  = 0
         while (randomWord[1].includes(' ')) {
+            console.log('i', i, randomWord);
             i += 1
             if (i < 100){alert('Erreur Inf404: Mot non trouvé.');return;}
             addExoPts(randomWord[0], 1);
