@@ -81,34 +81,29 @@ function saveExoPtsToFile() {
     URL.revokeObjectURL(url);
 }
 
-function loadExoPtsFromFile(file) {
-    if (!(file instanceof File)) {
-        console.error('Invalid file input. Please provide a valid File object.');
-        alert('Please upload a valid file.');
-        return;
-    }
+function loadExoPtsFromFile() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.fimi';
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
+    fileInput.addEventListener('change', async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
         try {
-            const fileContent = event.target.result;
-            const decryptedExoPts = JSON.parse(
-                new TextDecoder().decode(Uint8Array.from(atob(fileContent.trim()), c => c.charCodeAt(0)))
-            );
-            if (Array.isArray(decryptedExoPts)) {
-                exoPts = decryptedExoPts;
-                localStorage.setItem('exoPts', JSON.stringify(exoPts));
-                console.log('ExoPts successfully loaded from file.');
-            } else {
-                console.error('Invalid exoPts format in file.');
-                alert('The file format is invalid. Please upload a valid .fimi file.');
-            }
+            const fileContent = await file.text();
+            const decryptedContent = atob(fileContent); // Decrypt using Base64
+            const decodedContent = new TextDecoder().decode(Uint8Array.from(decryptedContent, c => c.charCodeAt(0)));
+            exoPts = JSON.parse(decodedContent);
+            localStorage.setItem('exoPts', JSON.stringify(exoPts));
+            alert('Fichier chargé avec succès !');
         } catch (error) {
-            console.error('Error parsing or decrypting exoPts file:', error);
-            alert('An error occurred while processing the file. Please ensure it is a valid .fimi file.');
+            console.error("Error loading exoPts from file:", error);
+            alert('Erreur lors du chargement du fichier.');
         }
-    };
-    reader.readAsText(file);
+    });
+
+    fileInput.click();
 }
 
 
