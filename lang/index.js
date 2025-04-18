@@ -84,14 +84,16 @@ function saveExoPtsToFile() {
 function loadExoPtsFromFile(file) {
     if (!(file instanceof File)) {
         console.error('Invalid file input. Please provide a valid File object.');
+        alert('Please upload a valid file.');
         return;
     }
 
     const reader = new FileReader();
     reader.onload = (event) => {
         try {
+            const fileContent = event.target.result;
             const decryptedExoPts = JSON.parse(
-                new TextDecoder().decode(Uint8Array.from(atob(event.target.result), c => c.charCodeAt(0)))
+                new TextDecoder().decode(Uint8Array.from(atob(fileContent.trim()), c => c.charCodeAt(0)))
             );
             if (Array.isArray(decryptedExoPts)) {
                 exoPts = decryptedExoPts;
@@ -99,9 +101,11 @@ function loadExoPtsFromFile(file) {
                 console.log('ExoPts successfully loaded from file.');
             } else {
                 console.error('Invalid exoPts format in file.');
+                alert('The file format is invalid. Please upload a valid .fimi file.');
             }
         } catch (error) {
             console.error('Error parsing or decrypting exoPts file:', error);
+            alert('An error occurred while processing the file. Please ensure it is a valid .fimi file.');
         }
     };
     reader.readAsText(file);
