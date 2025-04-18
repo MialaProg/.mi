@@ -15,7 +15,7 @@ var [dico,
     exoPts
 ] = Array(9).fill(false);
 
-/*Functions to set/get exoPts from local host*/
+/*Functions to set/get exoPts from local host / desktop*/
 function getExoPts(w) {
     if (!exoPts) {
 
@@ -65,6 +65,41 @@ function addExoPts(w, val) {
     setExoPts(w, result);
     return result;
 }
+
+/* Functions to save/load exoPts to/from a file */
+function saveExoPtsToFile() {
+    const encryptedExoPts = btoa(JSON.stringify(exoPts)); // Encrypt using Base64
+    const exoPtsBlob = new Blob([encryptedExoPts], { type: 'application/json' });
+    const url = URL.createObjectURL(exoPtsBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'XPdeMialien.fimi';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function loadExoPtsFromFile(file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        try {
+            const decryptedExoPts = JSON.parse(atob(event.target.result)); // Decrypt using Base64
+            if (Array.isArray(decryptedExoPts)) {
+                exoPts = decryptedExoPts;
+                localStorage.setItem('exoPts', JSON.stringify(exoPts));
+                console.log('ExoPts successfully loaded from file.');
+            } else {
+                console.error('Invalid exoPts format in file.');
+            }
+        } catch (error) {
+            console.error('Error parsing or decrypting exoPts file:', error);
+        }
+    };
+    reader.readAsText(file);
+}
+
+
+
+/*Principals functions*/
 
 async function fetchFiMi(path, sep = ';') {
     try {
