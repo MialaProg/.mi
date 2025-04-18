@@ -11,8 +11,59 @@ var [dico,
     AbcMi,
     exercise,
     exoNum,
-    checkAns
+    checkAns,
+    exoPts
 ] = Array(9).fill(false);
+
+/*Functions to set/get exoPts from local host*/
+function getExoPts(w) {
+    if (!exoPts) {
+
+        function initList() {
+            exoPts = ['_XP', 0];
+            // exoPts = dico.map(item => [item, 0]);
+        }
+
+        const savedExoPts = localStorage.getItem('exoPts');
+        if (savedExoPts) {
+            try {
+                exoPts = JSON.parse(savedExoPts);
+            } catch (error) {
+                console.error("Error parsing exoPts from localStorage:", error);
+                initList();
+            }
+        } else {
+            initList();
+        }
+    }
+
+    const item = exoPts.find(([key]) => key === w);
+    return item ? item[1] : 0;
+}
+
+function setExoPts(w, val) {
+    const itemIndex = exoPts.findIndex(([key]) => key === w);
+    if (itemIndex !== -1) {
+        exoPts[itemIndex] = [w, val];
+    } else {
+        exoPts.push([w, val]);
+    }
+
+    try {
+        localStorage.setItem('exoPts', JSON.stringify(exoPts));
+    } catch (error) {
+        console.error("Error saving exoPts to localStorage:", error);
+    }
+}
+
+function addExoPts(w, val) {
+    let result = getExoPts(w) + val;
+    if (result < 0){
+        result = 0;
+    }
+    setExoPts(w, result);
+    return result;
+}
 
 async function fetchFiMi(path, sep = ';') {
     try {
@@ -34,6 +85,11 @@ async function initDBs() {
     rcc = await fetchFiMi('./rcc.fimi', ':');
     fra_eng = await fetchFiMi('../ext/fra-eng.fimi', ':');
     dico = dico.filter(item => !item[0].startsWith('_'));
+    exoPts = dico.map(item => [item, 0]);
+    function showAfterLoading() {
+        document.querySelectorAll('.is-hidden').forEach(el => el.classList.remove('is-hidden'));
+    }
+    showAfterLoading();
     createTable(dico);
 }
 
@@ -55,7 +111,7 @@ function miToAudio(w) {
         w = w.replace(regex, pronunciation);
     });
     return w;
- 
+
 }
 
 function frToEn(w) {
@@ -282,9 +338,15 @@ function generateTrainingExercises() {
         return options;
     }
 
+    function getItem4Exo(list){
+        return list.reduce((minItem, currentItem) => {
+            return getExoPts(currentItem[0]) < getExoPts(minItem[0]) ? currentItem : minItem;
+        }, list[0]);
+    }
+
     // Exercise 1: Match the correct translation
     createExercise(.5, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
-        const randomWord = getRandomItem(dico);
+        const randomWord = getItem4Exo(dico); //getRandomItem(dico);
         const correctAnswer = randomWord[1];
 
         const wordDisplay = document.createElement('strong');
@@ -301,10 +363,12 @@ function generateTrainingExercises() {
             button.classList.add('button');
             button.addEventListener('click', () => {
                 if (option === correctAnswer) {
-                    alert('Bravo !');
+                    addExoPts(randomWord[0], 1);
+                    alert('Bravo ! XP: '+addExoPts('_XP', 1));
                     generateTrainingExercises();
                 } else {
                     alert('Essai encore !');
+                    addExoPts(randomWord[0], -1);
                 }
             });
             buttonsDiv.appendChild(button);
@@ -314,7 +378,7 @@ function generateTrainingExercises() {
 
     // Exercise 2: Reorder the sentence
     createExercise(.3, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
-        const randomCtxt = getRandomItem(ctxt);
+        const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
         const randomSentence = randomCtxt[1].split(' ');
         const correctOrder = randomSentence.join(' ');
 
@@ -346,9 +410,11 @@ function generateTrainingExercises() {
                         .map(node => node.getAttribute('rep'))
                         .join(' ');
                     if (userAnswer === correctOrder) {
-                        alert('Bravo ! Cela signifie ' + randomCtxt[0]);
+                        addExoPts(randomCtxt[0], 2);
+                        alert('Bravo ! Cela signifie ' + randomCtxt[0] + '\nXP: ' + addExoPts('_XP', 2));
                         generateTrainingExercises();
                     } else {
+                        addExoPts(randomCtxt[0], -1);
                         alert('Essai encore !');
                     }
                 }
@@ -367,7 +433,8 @@ function generateTrainingExercises() {
     createExercise(.2, dico, "Tape le mot correspondant :", (exerciseDiv) => {
         let randomWord = ['', 'n o t']
         while (randomWord[1].includes(' ')) {
-            randomWord = getRandomItem(dico);
+            addExoPts(randomWord[0], 1);
+            randomWord = getItem4Exo(ctxt); //getRandomItem(dico);
         }
 
         const correctAnswers = [randomWord[1], miToAudio(randomWord[1])];
@@ -385,9 +452,11 @@ function generateTrainingExercises() {
         const checkAnswer = () => {
             const userAnswer = hiddenInput.value;
             if (correctAnswers.includes(userAnswer)) {
-                alert('Bravo !');
+                addExoPts(randomWord[0], 3);
+                alert('Bravo ! XP: '+addExoPts('_XP', 1));
                 generateTrainingExercises();
             } else {
+                addExoPts(randomWord[0], -1);
                 alert(`Essai encore !`);
             }
         };

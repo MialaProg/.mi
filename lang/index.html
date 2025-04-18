@@ -20,6 +20,10 @@
             align-items: center;
             height: 100vh;
         }
+
+        .modal-background {
+            background-color: #000000 !important;
+        }
     </style>
 </head>
 
@@ -55,7 +59,7 @@
     <div class="buttons bottom">
         <button onclick="changeTheme()" class="button">Changer le thème</button>
         <!-- <button onclick="changeAbc()" class="button">Changer d'alphabet</button> -->
-        <button onclick="training()" class="button">S'entrainer</button>
+        <button onclick="training()" class="button is-hidden waitLoading">S'entrainer</button>
     </div>
 
     <div class="modal" id="trainingModal">
