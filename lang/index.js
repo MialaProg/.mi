@@ -449,7 +449,7 @@ function generateTrainingExercises() {
             i += 1
             if (i < 100){alert('Erreur Inf404: Mot non trouvé.');return;}
             addExoPts(randomWord[0], 1);
-            randomWord = getItem4Exo(ctxt); //getRandomItem(dico);
+            randomWord = getItem4Exo(dico); //getRandomItem(dico);
         }
 
         const correctAnswers = [randomWord[1], miToAudio(randomWord[1])];
