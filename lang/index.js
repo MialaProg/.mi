@@ -20,7 +20,7 @@ function getExoPts(w) {
     if (!exoPts) {
 
         function initList() {
-            exoPts = [['_XP', 0]];
+            exoPts = [];
             // exoPts = dico.map(item => [item, 0]);
         }
 
@@ -82,11 +82,17 @@ function saveExoPtsToFile() {
 }
 
 function loadExoPtsFromFile(file) {
+    if (!(file instanceof File)) {
+        console.error('Invalid file input. Please provide a valid File object.');
+        return;
+    }
+
     const reader = new FileReader();
     reader.onload = (event) => {
         try {
-            // Decrypt using Base64
-            JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(event.target.result), c => c.charCodeAt(0))))
+            const decryptedExoPts = JSON.parse(
+                new TextDecoder().decode(Uint8Array.from(atob(event.target.result), c => c.charCodeAt(0)))
+            );
             if (Array.isArray(decryptedExoPts)) {
                 exoPts = decryptedExoPts;
                 localStorage.setItem('exoPts', JSON.stringify(exoPts));
