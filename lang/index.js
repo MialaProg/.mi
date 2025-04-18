@@ -339,9 +339,20 @@ function generateTrainingExercises() {
     }
 
     function getItem4Exo(list){
-        return list.reduce((minItem, currentItem) => {
+        const randomItems = [];
+        for (let i = 0; i < 10; i++) {
+            const randomItem = getRandomItem(list);
+            if (randomItem && !randomItems.includes(randomItem)) {
+                randomItems.push(randomItem);
+            }
+        }
+        return randomItems.reduce((minItem, currentItem) => {
             return getExoPts(currentItem[0]) < getExoPts(minItem[0]) ? currentItem : minItem;
-        }, list[0]);
+        }, randomItems[0]);     
+
+        /**return list.reduce((minItem, currentItem) => {
+            return getExoPts(currentItem[0]) < getExoPts(minItem[0]) ? currentItem : minItem;
+        }, list[0]); */
     }
 
     // Exercise 1: Match the correct translation
