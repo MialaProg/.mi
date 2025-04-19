@@ -371,7 +371,7 @@ function generateTrainingExercises() {
     }
 
     // Helper function to generate random options
-    function generateRandomOptions(correctAnswer=false, sourceArray, min = 3, max = 13) {
+    function generateRandomOptions(correctAnswer = false, sourceArray, min = 3, max = 13) {
         const options = sourceArray
             .sort(() => 0.5 - Math.random())
             .slice(0, Math.floor(Math.random() * (max - min + 1)) + min)
@@ -406,7 +406,7 @@ function generateTrainingExercises() {
     document.querySelector('.exoSubmit').classList.add('is-hidden');
 
     // Exercise 1: Match the correct translation
-    createExercise(.04, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
+    createExercise(.35, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
         const randomWord = getItem4Exo(dico); //getRandomItem(dico);
         const correctAnswer = randomWord[1];
 
@@ -445,7 +445,7 @@ function generateTrainingExercises() {
     });
 
     // Exercise 3: Type the correct word
-    createExercise(.02, dico, "Tape le mot correspondant :", (exerciseDiv) => {
+    createExercise(.2, dico, "Tape le mot correspondant :", (exerciseDiv) => {
         let randomWord = ['_NOT', 'n o t'];
         let i = 0
         while (randomWord[1].includes(' ')) {
@@ -543,7 +543,7 @@ function generateTrainingExercises() {
     });
 
     // Exercise 2: Reorder the sentence
-    createExercise(.025, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
+    createExercise(.25, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
         const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
         const randomSentence = randomCtxt[1].split(' ');
         randomSentence = randomSentence.map(word => word.replace(/[.,;!?]/g, ''));
@@ -609,9 +609,11 @@ function generateTrainingExercises() {
     });
 
     // Exercise 4: Translate the sentence
-    createExercise(.915, ctxt, "(Beta) Traduit cette phrase :", (exerciseDiv) => {
+    createExercise(.2, ctxt, "(Beta) Traduit cette phrase :", (exerciseDiv) => {
         const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
         const randomSentence = randomCtxt[1].split(' ');
+        randomSentence = randomSentence.map(word => word.replace(/[.,;!?]/g, ''));
+
         const correctOrder = randomSentence.join(' ');
 
         const wordDisplay = document.createElement('strong');
@@ -619,8 +621,8 @@ function generateTrainingExercises() {
         exerciseDiv.appendChild(wordDisplay);
 
         const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
-        shuffledWords.push(...generateRandomOptions(undefined, ctxt, 3, 7));
-        
+        shuffledWords.push(...generateRandomOptions(undefined, dico, 3, 7));
+
         const wordButtons = shuffledWords.map(word => {
             const button = document.createElement('button');
             setMiText(word, button);
@@ -679,7 +681,7 @@ function generateTrainingExercises() {
         exerciseDiv.appendChild(optionsDiv);
     });
 
-    
+
 
     if (exercise) {
         exercise();
