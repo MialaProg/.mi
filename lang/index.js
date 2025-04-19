@@ -39,12 +39,12 @@ function getExoPts(w) {
 
     const item = exoPts.find(([key]) => key === w);
 
-    console.log('Get exoPts', w, item);
+    // console.log('Get exoPts', w, item);
     return item ? item[1] : 0;
 }
 
 function setExoPts(w, val) {
-    console.log('Set exoPts', w, val);
+    // console.log('Set exoPts', w, val);
     const itemIndex = exoPts.findIndex(([key]) => key === w);
     if (itemIndex !== -1) {
         exoPts[itemIndex] = [w, val];
@@ -424,8 +424,8 @@ function generateTrainingExercises() {
             button.classList.add('button');
             button.addEventListener('click', () => {
                 if (option === correctAnswer) {
-                    addExoPts(randomWord[0], 10);
-                    alert('Bravo ! XP: ' + addExoPts('_XP', 10));
+                    addExoPts(randomWord[0], 15);
+                    alert('Bravo ! XP: ' + addExoPts('_XP', 15));
                     generateTrainingExercises();
                 } else {
                     alert('Essai encore !');
@@ -438,9 +438,10 @@ function generateTrainingExercises() {
         exerciseDiv.appendChild(buttonsDiv);
         setButtonFunc('Pass', () => {
             alert('La bonne réponse était: ' + correctAnswer);
-            addExoPts(randomWord[0], -5);
-            addExoPts('_XP', -5);
+            generateTrainingExercises();
         });
+        addExoPts(randomWord[0], -5);
+        addExoPts('_XP', -5);
     });
 
     // Exercise 2: Reorder the sentence
@@ -484,8 +485,8 @@ function generateTrainingExercises() {
                 .map(node => node.getAttribute('rep'))
                 .join(' ');
             if (userAnswer === correctOrder) {
-                addExoPts(randomCtxt[0], 20);
-                alert('Bravo ! Cela signifie ' + randomCtxt[0] + '\nXP: ' + addExoPts('_XP', 20));
+                addExoPts(randomCtxt[0], 40);
+                alert('Bravo ! Cela signifie ' + randomCtxt[0] + '\nXP: ' + addExoPts('_XP', 30));
                 generateTrainingExercises();
             } else {
                 addExoPts(randomCtxt[0], -3);
@@ -496,9 +497,10 @@ function generateTrainingExercises() {
 
         setButtonFunc('Pass', () => {
             alert('La bonne réponse était: ' + correctOrder);
-            addExoPts(randomCtxt[0], -20);
-            addExoPts('_XP', -10);
+            generateTrainingExercises();
         });
+        addExoPts(randomCtxt[0], -20);
+        addExoPts('_XP', -10);
 
         const separator = document.createElement('hr');
         separator.classList.add('separator');
@@ -534,8 +536,8 @@ function generateTrainingExercises() {
         const checkAnswer = () => {
             const userAnswer = hiddenInput.value;
             if (correctAnswers.includes(userAnswer)) {
-                addExoPts(randomWord[0], 30);
-                alert('Bravo ! XP: ' + addExoPts('_XP', 30));
+                addExoPts(randomWord[0], 40);
+                alert('Bravo ! XP: ' + addExoPts('_XP', 40));
                 generateTrainingExercises();
             } else {
                 addExoPts(randomWord[0], -5);
@@ -543,6 +545,12 @@ function generateTrainingExercises() {
                 alert(`Essai encore !`);
             }
         };
+        setButtonFunc('Pass', () => {
+            alert('La bonne réponse était: ' + correctAnswers.join(' ou '));
+            generateTrainingExercises();
+        });
+        addExoPts(randomCtxt[0], -10);
+        addExoPts('_XP', -10);
 
         for (let i = 0; i < 10; i++) {
             inputDiv.textContent += '_';
@@ -596,11 +604,7 @@ function generateTrainingExercises() {
             checkAnswer();
         })
 
-        setButtonFunc('Pass', () => {
-            alert('La bonne réponse était: ' + correctAnswers.join(' ou '));
-            addExoPts(randomCtxt[0], -10);
-            addExoPts('_XP', -10);
-        });
+
     });
 
     if (exercise) {
