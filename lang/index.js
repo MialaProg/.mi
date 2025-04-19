@@ -371,12 +371,12 @@ function generateTrainingExercises() {
     }
 
     // Helper function to generate random options
-    function generateRandomOptions(correctAnswer, sourceArray, min = 3, max = 7) {
+    function generateRandomOptions(correctAnswer=false, sourceArray, min = 3, max = 13) {
         const options = sourceArray
             .sort(() => 0.5 - Math.random())
             .slice(0, Math.floor(Math.random() * (max - min + 1)) + min)
             .map(item => item[1]);
-        if (!options.includes(correctAnswer)) {
+        if (correctAnswer && !options.includes(correctAnswer)) {
             options[Math.floor(Math.random() * options.length)] = correctAnswer;
         }
         return options;
@@ -406,7 +406,7 @@ function generateTrainingExercises() {
     document.querySelector('.exoSubmit').classList.add('is-hidden');
 
     // Exercise 1: Match the correct translation
-    createExercise(.5, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
+    createExercise(.4, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
         const randomWord = getItem4Exo(dico); //getRandomItem(dico);
         const correctAnswer = randomWord[1];
 
@@ -442,71 +442,6 @@ function generateTrainingExercises() {
         });
         addExoPts(randomWord[0], -5);
         addExoPts('_XP', -5);
-    });
-
-    // Exercise 2: Reorder the sentence
-    createExercise(.3, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
-        const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
-        const randomSentence = randomCtxt[1].split(' ');
-        const correctOrder = randomSentence.join(' ');
-
-        const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
-        const wordButtons = shuffledWords.map(word => {
-            const button = document.createElement('button');
-            setMiText(word, button);
-            button.setAttribute('rep', word);
-            button.classList.add('button');
-            return button;
-        });
-
-        const sentenceDiv = document.createElement('div');
-        sentenceDiv.classList.add('sentence');
-        exerciseDiv.appendChild(sentenceDiv);
-
-        const optionsDiv = document.createElement('div');
-        optionsDiv.classList.add('options');
-        wordButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                if (button.parentNode === optionsDiv) {
-                    sentenceDiv.appendChild(button);
-                } else {
-                    optionsDiv.appendChild(button);
-                }
-
-                // if (sentenceDiv.childNodes.length === shuffledWords.length) {
-
-                // }
-            });
-            optionsDiv.appendChild(button);
-        });
-
-        setButtonFunc('Submit', () => {
-            const userAnswer = Array.from(sentenceDiv.childNodes)
-                .map(node => node.getAttribute('rep'))
-                .join(' ');
-            if (userAnswer === correctOrder) {
-                addExoPts(randomCtxt[0], 40);
-                alert('Bravo ! Cela signifie ' + randomCtxt[0] + '\nXP: ' + addExoPts('_XP', 30));
-                generateTrainingExercises();
-            } else {
-                addExoPts(randomCtxt[0], -3);
-                addExoPts('_XP', -5)
-                alert('Essai encore !');
-            }
-        })
-
-        setButtonFunc('Pass', () => {
-            alert('La bonne réponse était: ' + correctOrder);
-            generateTrainingExercises();
-        });
-        addExoPts(randomCtxt[0], -20);
-        addExoPts('_XP', -10);
-
-        const separator = document.createElement('hr');
-        separator.classList.add('separator');
-        exerciseDiv.appendChild(separator);
-
-        exerciseDiv.appendChild(optionsDiv);
     });
 
     // Exercise 3: Type the correct word
@@ -606,6 +541,144 @@ function generateTrainingExercises() {
 
 
     });
+
+    // Exercise 2: Reorder the sentence
+    createExercise(.25, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
+        const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
+        const randomSentence = randomCtxt[1].split(' ');
+        const correctOrder = randomSentence.join(' ');
+
+        const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
+        const wordButtons = shuffledWords.map(word => {
+            const button = document.createElement('button');
+            setMiText(word, button);
+            button.setAttribute('rep', word);
+            button.classList.add('button');
+            return button;
+        });
+
+        const sentenceDiv = document.createElement('div');
+        sentenceDiv.classList.add('sentence');
+        exerciseDiv.appendChild(sentenceDiv);
+
+        const optionsDiv = document.createElement('div');
+        optionsDiv.classList.add('options');
+        wordButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.parentNode === optionsDiv) {
+                    sentenceDiv.appendChild(button);
+                } else {
+                    optionsDiv.appendChild(button);
+                }
+
+                // if (sentenceDiv.childNodes.length === shuffledWords.length) {
+
+                // }
+            });
+            optionsDiv.appendChild(button);
+        });
+
+        setButtonFunc('Submit', () => {
+            const userAnswer = Array.from(sentenceDiv.childNodes)
+                .map(node => node.getAttribute('rep'))
+                .join(' ');
+            if (userAnswer === correctOrder) {
+                addExoPts(randomCtxt[0], 40);
+                alert('Bravo ! Cela signifie ' + randomCtxt[0] + '\nXP: ' + addExoPts('_XP', 30));
+                generateTrainingExercises();
+            } else {
+                addExoPts(randomCtxt[0], -3);
+                addExoPts('_XP', -5)
+                alert('Essai encore !');
+            }
+        })
+
+        setButtonFunc('Pass', () => {
+            alert('La bonne réponse était: ' + correctOrder);
+            generateTrainingExercises();
+        });
+        addExoPts(randomCtxt[0], -20);
+        addExoPts('_XP', -10);
+
+        const separator = document.createElement('hr');
+        separator.classList.add('separator');
+        exerciseDiv.appendChild(separator);
+
+        exerciseDiv.appendChild(optionsDiv);
+    });
+
+    // Exercise 4: Translate the sentence
+    createExercise(.15, ctxt, "(Beta) Traduit cette phrase :", (exerciseDiv) => {
+        const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
+        const randomSentence = randomCtxt[1].split(' ');
+        const correctOrder = randomSentence.join(' ');
+
+        const wordDisplay = document.createElement('strong');
+        wordDisplay.textContent = randomCtxt[0];
+        exerciseDiv.appendChild(wordDisplay);
+
+        const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
+        shuffledWords.push(...generateRandomOptions(undefined, ctxt, 3, 7));
+        
+        const wordButtons = shuffledWords.map(word => {
+            const button = document.createElement('button');
+            setMiText(word, button);
+            button.setAttribute('rep', word);
+            button.classList.add('button');
+            return button;
+        });
+
+        const sentenceDiv = document.createElement('div');
+        sentenceDiv.classList.add('sentence');
+        exerciseDiv.appendChild(sentenceDiv);
+
+        const optionsDiv = document.createElement('div');
+        optionsDiv.classList.add('options');
+        wordButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.parentNode === optionsDiv) {
+                    sentenceDiv.appendChild(button);
+                } else {
+                    optionsDiv.appendChild(button);
+                }
+
+                // if (sentenceDiv.childNodes.length === shuffledWords.length) {
+
+                // }
+            });
+            optionsDiv.appendChild(button);
+        });
+
+        setButtonFunc('Submit', () => {
+            const userAnswer = Array.from(sentenceDiv.childNodes)
+                .map(node => node.getAttribute('rep'))
+                .join(' ');
+            if (userAnswer === correctOrder) {
+                addExoPts(randomCtxt[0], 50);
+                alert('Bravo ! Cela signifie ' + randomCtxt[0] + '\nXP: ' + addExoPts('_XP', 40));
+                generateTrainingExercises();
+            } else {
+                addExoPts(randomCtxt[0], -3);
+                addExoPts('_XP', -5)
+                alert('Essai encore !');
+            }
+        })
+
+        setButtonFunc('Pass', () => {
+            alert('La bonne réponse était: ' + correctOrder);
+            generateTrainingExercises();
+        });
+        addExoPts(randomCtxt[0], -20);
+        addExoPts('_XP', -10);
+
+        const separator = document.createElement('hr');
+        separator.classList.add('separator');
+        exerciseDiv.appendChild(separator);
+
+        exerciseDiv.appendChild(optionsDiv);
+    });
+
+    
 
     if (exercise) {
         exercise();
