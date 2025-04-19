@@ -1,5 +1,7 @@
 __Chargement en cours...;Veuillez patienter.
 __IMPORTANT:;Serveur test & développement.
+finalement;finX
+selon;selN
 0;0 (nO);num
 1;1 (wo)
 2;2 (do)
@@ -14,185 +16,178 @@ __IMPORTANT:;Serveur test & développement.
 98;98 (qosoros)
 98000;98000 (qosorosononono)
 aller;vèr;vb
+animation;anim
+animé;animé;anim
+animer;animèr;anim
+annimal;nim
+anticiper;Atisipèr
 après;apro
+atome;atomos
 attraction;atraqs•;nom
 aujourd'hui;ojo
+avance;avAs
+avancer;avAsèr;avAs
+avant;avA;avAs
 avoir;ar
 beaucoup/nombreux;mUi
+boite;bWti;bWt
+bon;boné
+ça/ce/...;C
 carotte;miamidi
+chercher;finwèr;finw
+clé;qlé
+clef;qlé
+comme;qom
+composte;qOnposto
+cône;vOn
+connaissance;qon
+connaitre;qonèr;qon
+contrôle;qOntrOl
+contrôlé;qOntrOlé;qOntrOl
+contrôler;qOntrOlèr;qOntrOl
+coupe;qUp
+couper;qUpèr;qUp
 cours;qlas
+créer;qréèr
+dans;dA
+de fait;donq
+début;init
+définir;défèr;déf
+définition;déf
 demain;aprojo
-devoir (verbe);dévèr
+devoir (aux impératif);ur
+devoir (nom);dub
+dieu;diw
 dieu;diwi
+donc;donq
+eau;o
 elle;lo
 elles;los;lo
+emboitement;bWt
+ensemble;AsAbl
 espoir;éspo;éspo
+étrange;bizar
 être;ér
+euh;e
+évoluer;évolèr;évol
+évolution;évol
+faire son devoir;dubèr;dub
 faire;féèr
 fenêtre;qlOrtav
 fermer;qlozèr
 fille;fili
+fils;fil
 fils;fili
+fin;fin
 gateau;gato
+grandeur;gotEr
+habitat;abit
+habiter;abitèr;abit
+hauteur;otEr
+humain;Uman;Uman
 ici;isi
 il;lo
 ils;los;lo
+initialisation;inis
+initier;inisèr;inis
+interet;Itét
+interressé;Itété;Itét
 inverse;invirsi
 je;yo
+la;L
+lac;mIgo;o
+le;L
+lecture;léq
+les;L
+lire;léqèr;léq
+livre;léqèv;léq
+longtemps;mUiprop;prop
+machine;robo
+main;man
 maintenant;oyo
 manger;miamèr
+mauvais;noné;boné
+mer;go;o
 merci;méli
 mère;piri
 miala;M
+modification;édit
+modifier;editèr;édit
+moins;mI
+mort (adj);mOré;mOr
+mort (nom);mOr
+mourrir;mOrèr;mOr
+nombre;# (ah)
+non;no
+note;not
+noter;notèr
 nous;yos;yo
+océan;séo;o
 oiseau;wazo
+or (metal);orom;orom
+origine;orig
+où;qU
+oui;si
+overdose;overd
+pain;pan
 parent;piri
 parler;Hablèr
 partage;patag
+pas assez;mIr;pI
 penser;pAsèr
+perdre;pèrdèr;pèrd
 père;piri
+perte;pèrd
+petit;potEré;potEr;
+petitesse;potEr
+peut-être;pete
+philosophie;filo
+phrase;fraz
+plus;pI
+ponctuation;siYN
 porte (qui se ferme);qlOrt
 poser;pozèr
 pouvoir (verbe);podèr
+profondeur;otErm;otEr
 protéger;protégèr
-sujet;sujé
-terreur;térOr
-test/control/examen;éxam
-transparent;travèrsé
-tu;to
-voir;véèr
-volet;qlOrtég
-vous;tos;to
-or (metal);orom;orom
-humain;Uman;Uman
-vie;viv;viv
-vivant;vivé;viv
-composte;qOnposto
-rampe;rAp
-serpent;sèrpAt
-tortue;tortu
-qui;qi
-quoi;qW
-où;qU
+puissance;pwisAt
 quand;qA
-comme;qom
-technique;tèq
-clé;qlé
-clef;qlé
-créer;qréèr
-contrôle;qOntrOl
-contrôler;qOntrOlèr;qOntrOl
-contrôlé;qOntrOlé;qOntrOl
-initier;inisèr;inis
-initialisation;inis
-modifier;editèr;édit
-modification;édit
-début;init
-fin;fin
-philosophie;filo
 question;qést•
 questionner;qéstionèr;qést•
-donc;donq
-de fait;donq
-anticiper;Atisipèr
-santé;viwAs
-couper;qUpèr;qUp
-coupe;qUp
-profondeur;otErm;otEr
-moins;mI
-hauteur;otEr
-main;man
-puissance;pwisAt
-réponse;rép
-ensemble;AsAbl
-robot;robo
-machine;robo
-océan;séo;o
-mer;go;o
-eau;o
-lac;mIgo;o
-perdre;pèrdèr;pèrd
-perte;pèrd
-oui;si
-_SA
-_ÇA
-non;no
-le;L
-la;L
-les;L
-définir;défèr;déf
-définition;déf
-évoluer;évolèr;évol
-évolution;évol
-trouver;finvèr;finv
-trouvaille;finv
-chercher;finwèr;finw
+qui;qi
+quoi;qW
+rampe;rAp
+rapide;vité;vit
 recherche;finw
-_SELON
-devoir (nom);déb
-devoir (verbe);débèr;déb
-bon;boné
-mauvais;noné;boné
-plus;pI
-pain;pan
-_finalement;finEMENT
-trop;pIr;pI
-pas assez;mIr;pI
-avance;avAs
-avancer;avAsèr;avAs
-avant;avA;avAs
-note;not
-noter;notèr
-euh;e
-connaitre;qonèr;qon
-connaissance;qon
-cône;vOn
-étrange;bizar
-nombre;# (ah)
-atome;atomos
-lire;léqèr;léq
-lecture;léq
-livre;léqèv;léq
-ponctuation;siYN
-ça/ce/...;C
-son/mon/...;S
+réponse;rép
+robot;robo
+santé;viwAs
+serpent;sèrpAt
 signe;siY
 signer;siYèrr;siY
-annimal;nim
-animation;anim
-animer;animèr;anim
-animé;animé;anim
-utilisation;util
-utilisé;utilé;util
-voiture;atur;atu
-transport;atu
+son/mon/...;S
+sujet;sujé
+technique;tèq
 temps;prop
-longtemps;mUiprop;prop
-peut-être;pete
-interet;Itét
-interressé;Itété;Itét
-grandeur;gotEr
+terreur;térOr
+terrible;téroré;téror
+test/control/examen;éxam
+tortue;tortu
 toujours;promni;omni
 tout;omni
-dans;dA
-rapide;vité;vit
+transparent;travèrsé
+transport;atu
+trop;pIr;pI
+trouvaille;finv
+trouver;finvèr;finv
+tu;to
+utilisation;util
+utilisé;utilé;util
+vie;viv;viv
 vite;vité;vit
 vitesse;vit
-faire son devoir;dubèr;dub
-devoir (aux impératif);ur
-terrible;téroré;téror
-mort (nom);mOr
-mourrir;mOrèr;mOr
-mort (adj);mOré;mOr
-petitesse;potEr
-petit;potEré;potEr;
-boite;bWti;bWt
-emboitement;bWt
-habitat;abit
-habiter;abitèr;abit
-origine;orig
-overdose;overd
-phrase;fraz
-devoir (nom);dub
-fils;fil
-dieu;diw
+vivant;vivé;viv
+voir;véèr
+voiture;atur;atu
+volet;qlOrtég
+vous;tos;to
