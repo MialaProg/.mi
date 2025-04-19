@@ -406,7 +406,7 @@ function generateTrainingExercises() {
     document.querySelector('.exoSubmit').classList.add('is-hidden');
 
     // Exercise 1: Match the correct translation
-    createExercise(.4, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
+    createExercise(.04, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
         const randomWord = getItem4Exo(dico); //getRandomItem(dico);
         const correctAnswer = randomWord[1];
 
@@ -445,7 +445,7 @@ function generateTrainingExercises() {
     });
 
     // Exercise 3: Type the correct word
-    createExercise(.2, dico, "Tape le mot correspondant :", (exerciseDiv) => {
+    createExercise(.02, dico, "Tape le mot correspondant :", (exerciseDiv) => {
         let randomWord = ['_NOT', 'n o t'];
         let i = 0
         while (randomWord[1].includes(' ')) {
@@ -543,7 +543,7 @@ function generateTrainingExercises() {
     });
 
     // Exercise 2: Reorder the sentence
-    createExercise(.25, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
+    createExercise(.025, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
         const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
         const randomSentence = randomCtxt[1].split(' ');
         randomSentence = randomSentence.map(word => word.replace(/[.,;!?]/g, ''));
@@ -609,7 +609,7 @@ function generateTrainingExercises() {
     });
 
     // Exercise 4: Translate the sentence
-    createExercise(.15, ctxt, "(Beta) Traduit cette phrase :", (exerciseDiv) => {
+    createExercise(.915, ctxt, "(Beta) Traduit cette phrase :", (exerciseDiv) => {
         const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
         const randomSentence = randomCtxt[1].split(' ');
         const correctOrder = randomSentence.join(' ');
