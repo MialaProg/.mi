@@ -546,6 +546,7 @@ function generateTrainingExercises() {
     createExercise(.25, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
         const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
         const randomSentence = randomCtxt[1].split(' ');
+        randomSentence = randomSentence.map(word => word.replace(/[.,;!?]/g, ''));
         const correctOrder = randomSentence.join(' ');
 
         const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
