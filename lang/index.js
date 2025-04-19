@@ -131,7 +131,7 @@ async function initDBs() {
     fra_eng = await fetchFiMi('../ext/fra-eng.fimi', ':');
     dico = dico.filter(item => !item[0].startsWith('_'));
     function showAfterLoading() {
-        document.querySelectorAll('.is-hidden').forEach(el => el.classList.remove('is-hidden'));
+        document.querySelectorAll('.waitLoading').forEach(el => el.classList.remove('is-hidden'));
     }
     showAfterLoading();
     createTable(dico);
