@@ -61,7 +61,7 @@ function setExoPts(w, val) {
 
 function addExoPts(w, val) {
     let result = getExoPts(w) + val;
-    if (result < 0){
+    if (result < 0) {
         result = 0;
     }
     setExoPts(w, result);
@@ -382,7 +382,11 @@ function generateTrainingExercises() {
         return options;
     }
 
-    function getItem4Exo(list){
+    function setButtonFunc(id, func) {
+        document.querySelectorAll('.exo' + id).forEach(el => { el.onclick = func; el.classList.remove('is-hidden'); });
+    }
+
+    function getItem4Exo(list) {
         const randomItems = [];
         for (let i = 0; i < 10; i++) {
             const randomItem = getRandomItem(list);
@@ -392,12 +396,14 @@ function generateTrainingExercises() {
         }
         return randomItems.reduce((minItem, currentItem) => {
             return getExoPts(currentItem[0]) < getExoPts(minItem[0]) ? currentItem : minItem;
-        }, randomItems[0]);     
+        }, randomItems[0]);
 
         /**return list.reduce((minItem, currentItem) => {
             return getExoPts(currentItem[0]) < getExoPts(minItem[0]) ? currentItem : minItem;
         }, list[0]); */
     }
+
+    document.querySelector('exoSubmit').classList.add('is-hidden');
 
     // Exercise 1: Match the correct translation
     createExercise(.5, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
@@ -418,17 +424,23 @@ function generateTrainingExercises() {
             button.classList.add('button');
             button.addEventListener('click', () => {
                 if (option === correctAnswer) {
-                    addExoPts(randomWord[0], 1);
-                    alert('Bravo ! XP: '+addExoPts('_XP', 1));
+                    addExoPts(randomWord[0], 10);
+                    alert('Bravo ! XP: ' + addExoPts('_XP', 10));
                     generateTrainingExercises();
                 } else {
                     alert('Essai encore !');
-                    addExoPts(randomWord[0], -1);
+                    addExoPts(randomWord[0], -3);
+                    addExoPts('_XP', -7);
                 }
             });
             buttonsDiv.appendChild(button);
         });
         exerciseDiv.appendChild(buttonsDiv);
+        setButtonFunc('Pass', () => {
+            alert('La bonne réponse était: ' + correctAnswer);
+            addExoPts(randomWord[0], -5);
+            addExoPts('_XP', -5);
+        });
     });
 
     // Exercise 2: Reorder the sentence
@@ -460,21 +472,32 @@ function generateTrainingExercises() {
                     optionsDiv.appendChild(button);
                 }
 
-                if (sentenceDiv.childNodes.length === shuffledWords.length) {
-                    const userAnswer = Array.from(sentenceDiv.childNodes)
-                        .map(node => node.getAttribute('rep'))
-                        .join(' ');
-                    if (userAnswer === correctOrder) {
-                        addExoPts(randomCtxt[0], 2);
-                        alert('Bravo ! Cela signifie ' + randomCtxt[0] + '\nXP: ' + addExoPts('_XP', 2));
-                        generateTrainingExercises();
-                    } else {
-                        addExoPts(randomCtxt[0], -1);
-                        alert('Essai encore !');
-                    }
-                }
+                // if (sentenceDiv.childNodes.length === shuffledWords.length) {
+
+                // }
             });
             optionsDiv.appendChild(button);
+        });
+
+        setButtonFunc('Submit', () => {
+            const userAnswer = Array.from(sentenceDiv.childNodes)
+                .map(node => node.getAttribute('rep'))
+                .join(' ');
+            if (userAnswer === correctOrder) {
+                addExoPts(randomCtxt[0], 20);
+                alert('Bravo ! Cela signifie ' + randomCtxt[0] + '\nXP: ' + addExoPts('_XP', 20));
+                generateTrainingExercises();
+            } else {
+                addExoPts(randomCtxt[0], -3);
+                addExoPts('_XP', -5)
+                alert('Essai encore !');
+            }
+        })
+
+        setButtonFunc('Pass', () => {
+            alert('La bonne réponse était: ' + correctOrder);
+            addExoPts(randomCtxt[0], -20);
+            addExoPts('_XP', -10);
         });
 
         const separator = document.createElement('hr');
@@ -487,11 +510,11 @@ function generateTrainingExercises() {
     // Exercise 3: Type the correct word
     createExercise(.2, dico, "Tape le mot correspondant :", (exerciseDiv) => {
         let randomWord = ['_NOT', 'n o t'];
-        let i  = 0
+        let i = 0
         while (randomWord[1].includes(' ')) {
             console.log('i', i, randomWord);
             i += 1
-            if (i > 100){alert('Erreur Inf404: Mot non trouvé.');return;}
+            if (i > 100) { alert('Erreur Inf404: Mot non trouvé.'); return; }
             addExoPts(randomWord[0], 1);
             randomWord = getItem4Exo(dico); //getRandomItem(dico);
         }
@@ -511,11 +534,12 @@ function generateTrainingExercises() {
         const checkAnswer = () => {
             const userAnswer = hiddenInput.value;
             if (correctAnswers.includes(userAnswer)) {
-                addExoPts(randomWord[0], 3);
-                alert('Bravo ! XP: '+addExoPts('_XP', 1));
+                addExoPts(randomWord[0], 30);
+                alert('Bravo ! XP: ' + addExoPts('_XP', 30));
                 generateTrainingExercises();
             } else {
-                addExoPts(randomWord[0], -1);
+                addExoPts(randomWord[0], -5);
+                addExoPts('_XP', -5)
                 alert(`Essai encore !`);
             }
         };
@@ -567,6 +591,16 @@ function generateTrainingExercises() {
                 observer.observe(exerciseDiv.parentNode, { childList: true });
             }
         }, 0);
+
+        setButtonFunc('Submit', () => {
+            checkAnswer();
+        })
+
+        setButtonFunc('Pass', () => {
+            alert('La bonne réponse était: ' + correctAnswers.join(' ou '));
+            addExoPts(randomCtxt[0], -10);
+            addExoPts('_XP', -10);
+        });
     });
 
     if (exercise) {
