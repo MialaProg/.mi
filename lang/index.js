@@ -403,7 +403,7 @@ function generateTrainingExercises() {
         }, list[0]); */
     }
 
-    document.querySelector('exoSubmit').classList.add('is-hidden');
+    document.querySelector('.exoSubmit').classList.add('is-hidden');
 
     // Exercise 1: Match the correct translation
     createExercise(.5, dico, "Choisi la bonne traduction: ", (exerciseDiv) => {
