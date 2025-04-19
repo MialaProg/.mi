@@ -484,7 +484,7 @@ function generateTrainingExercises() {
             alert('La bonne réponse était: ' + correctAnswers.join(' ou '));
             generateTrainingExercises();
         });
-        addExoPts(randomCtxt[0], -10);
+        addExoPts(randomWord[0], -10);
         addExoPts('_XP', -10);
 
         for (let i = 0; i < 10; i++) {
