@@ -546,6 +546,7 @@ function generateTrainingExercises() {
     createExercise(.25, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
         const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
         let randomSentence = randomCtxt[1].replace(/[.,;!?]/g, '').split(' ');
+        randomSentence = randomSentence.filter(word => word.trim() !== '');
         const correctOrder = randomSentence.join(' ');
 
         const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
@@ -611,7 +612,7 @@ function generateTrainingExercises() {
     createExercise(.2, ctxt, "(Beta) Traduit cette phrase :", (exerciseDiv) => {
         const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
         let randomSentence = randomCtxt[1].replace(/[.,;!?]/g, '').split(' ');
-
+        randomSentence = randomSentence.filter(word => word.trim() !== '');
         const correctOrder = randomSentence.join(' ');
 
         const wordDisplay = document.createElement('strong');
