@@ -545,8 +545,7 @@ function generateTrainingExercises() {
     // Exercise 2: Reorder the sentence
     createExercise(.25, ctxt, "Remet cette phrase dans l'ordre !", (exerciseDiv) => {
         const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
-        let randomSentence = randomCtxt[1].split(' ');
-        randomSentence = randomSentence.map(word => word.replace(/[.,;!?]/g, ''));
+        let randomSentence = randomCtxt[1].replace(/[.,;!?]/g, '').split(' ');
         const correctOrder = randomSentence.join(' ');
 
         const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
@@ -611,8 +610,7 @@ function generateTrainingExercises() {
     // Exercise 4: Translate the sentence
     createExercise(.2, ctxt, "(Beta) Traduit cette phrase :", (exerciseDiv) => {
         const randomCtxt = getItem4Exo(ctxt); //getRandomItem(ctxt);
-        let randomSentence = randomCtxt[1].split(' ');
-        randomSentence = randomSentence.map(word => word.replace(/[.,;!?]/g, ''));
+        let randomSentence = randomCtxt[1].replace(/[.,;!?]/g, '').split(' ');
 
         const correctOrder = randomSentence.join(' ');
 
@@ -620,8 +618,9 @@ function generateTrainingExercises() {
         wordDisplay.textContent = randomCtxt[0];
         exerciseDiv.appendChild(wordDisplay);
 
-        const shuffledWords = [...randomSentence].sort(() => 0.5 - Math.random());
+        let shuffledWords = [...randomSentence];
         shuffledWords.push(...generateRandomOptions(undefined, dico, 3, 7));
+        shuffledWords = shuffledWords.sort(() => 0.5 - Math.random());
 
         const wordButtons = shuffledWords.map(word => {
             const button = document.createElement('button');
